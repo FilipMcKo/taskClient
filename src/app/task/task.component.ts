@@ -13,14 +13,15 @@ export class TaskComponent implements OnInit {
   private pages:Array<number>;
 
   constructor(private _myService:TaskService) { }
+
+  ngOnInit() {
+    this.getAllTasksPaged();
+  }
+
   setPage(i, event:any){
       event.preventDefault();
       this.page=i;
       this.getAllTasksPaged();
-  }
-
-  ngOnInit() {
-    this.getAllTasksPaged();
   }
 
   getAllTasksPaged(){
@@ -33,6 +34,40 @@ export class TaskComponent implements OnInit {
         error.console.error();
       }
     );
+  }
+
+  removeTask(taskId:number){
+    this._myService.removeTask(taskId).subscribe(
+      data=>{
+        this.tasks = data['content'];
+        this.pages = new Array(data['totalPages'])
+      },
+      (error)=>{
+        error.console.error();
+      }
+    )
+  }
+
+  startProcessingTask(taskId:number){
+    this._myService.startProcessingTask(taskId).subscribe(
+      resp=>{
+        console.log(resp);
+      },
+      (error)=>{
+        error.console.error();
+      }
+    )
+  }
+
+  cancelProcessingTask(taskId:number){
+    this._myService.cancelProcessingTask(taskId).subscribe(
+      resp=>{
+        console.log(resp);
+      },
+      (error)=>{
+        error.console.error();
+      }
+    )
   }
 
 }

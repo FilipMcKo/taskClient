@@ -8,6 +8,9 @@
                 <th scope="col">Description</th>
                 <th scope="col">Current state</th>
                 <th scope="col">Progress percentage</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
               </tr>
             </thead>
         <tbody>
@@ -16,16 +19,25 @@
             <td>{{task.description}}</td>
             <td>{{task.currentState}}</td>
             <td>{{task.progressPercentage}}</td>
+            <td><button type="button" (click)="startProcessingTask(task.id)" onClick="window.location.reload();" class="btn btn-success">Start</button></td>
+            <td><button type="button" (click)="cancelProcessingTask(task.id)" onClick="window.location.reload();" class="btn btn-warning">Cancel</button></td>
+            <td><button type="button" (click)="removeTask(task.id)" onClick="window.location.reload();" class="btn btn-danger">Delete</button></td>
           </tr>
         </tbody>
       </table>
       <hr>
+      <form class="form-inline">
       <ul class="nav nav-pills">
         <li class="nav-item" *ngFor="let p of pages; let i=index">
           <a class="nav-link" href="" (click)="setPage(i,$event)" 
-          [ngClass]="{'active':i==page}">{{i}}</a>
+          [ngClass]="{'active':i==page}">{{i+1}}</a>
         </li>
+        <div>
+        <button type="button" (click)="setPage(box.value-1,$event)" class="btn btn-info" style=margin-left:25px>Go to page: </button>
+        <input #box (keyup.enter)="update(box.value)" type="number" class="form-control">
+      </div>
       </ul>
+    </form>
     </div>
   </div>
 </div>

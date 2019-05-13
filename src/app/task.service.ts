@@ -12,4 +12,17 @@ export class TaskService {
   getAllTasksPaged(page:number){
     return this._http.get(this.baseUrl + '/tasksPage?page=' + page);
   }
+
+  removeTask(taskId:number){
+    return this._http.delete(this.baseUrl + '/tasks/' + taskId);
+  }
+
+  startProcessingTask(taskId:number){
+    return this._http.put(this.baseUrl + '/tasks/' + taskId + '/start',null);
+  }
+
+  cancelProcessingTask(taskId:number){
+    return this._http.put(this.baseUrl + '/tasks/' + taskId + '/cancel',null);
+  }
+
 }
