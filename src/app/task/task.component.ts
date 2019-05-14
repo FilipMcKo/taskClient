@@ -1,6 +1,10 @@
-import { TaskService } from './../task.service';
+import { DataSharingService } from './../datasharing.service';
+import { map } from 'rxjs/operators';
+import { TaskService } from '../task.service';
 import { Component, OnInit } from '@angular/core';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { TaskData } from '@angular/core/src/testability/testability';
+import { Task } from 'src/app/models/task.model';
 
 @Component({
   selector: 'app-task',
@@ -9,8 +13,9 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 })
 export class TaskComponent implements OnInit {
   private page:number = 0;
-  private tasks:Array<any>;
+  private tasks:Array<Task>;
   private pages:Array<number>;
+  private task:TaskData;
 
   constructor(private _myService:TaskService) { }
 
@@ -18,37 +23,41 @@ export class TaskComponent implements OnInit {
     this.getAllTasksPaged();
   }
 
-  setPage(i, event:any){
+  setPage(i:number, event:any){
       event.preventDefault();
       this.page=i;
       this.getAllTasksPaged();
   }
 
+  sortTasksByName(){
+  
+  }
+
   getAllTasksPaged(){
     this._myService.getAllTasksPaged(this.page).subscribe(
       data=>{
-        this.tasks = data['content'];
+        this.tasks = data['content'].map((task: Task) => new Task().deserialize(task)),
         this.pages = new Array(data['totalPages'])
-      },
-      (error)=>{
-        error.console.error();
       }
     );
   }
 
   removeTask(taskId:number){
-    this._myService.removeTask(taskId).subscribe(
-      data=>{
-        this.tasks = data['content'];
-        this.pages = new Array(data['totalPages'])
-      },
-      (error)=>{
-        error.console.error();
-      }
-    )
+    this._myService.removeTask(taskId).subscribe()
   }
 
+  addNewTask(name: string, description: string){
+    this._myService.addNewTask(name, description);
+  }
+
+
+  /*
+  te wszystkie metody poniżej mają bullshit w swoich ciałach 
+  bo powinny mi zwracać jakoś response cody i message
+  na razie to jest tymczasowa copypasta
+  */
   startProcessingTask(taskId:number){
+    //this.datasharingService.taskCantBeStarted.next(true);
     this._myService.startProcessingTask(taskId).subscribe(
       resp=>{
         console.log(resp);
@@ -57,6 +66,7 @@ export class TaskComponent implements OnInit {
         error.console.error();
       }
     )
+    this.getAllTasksPaged();
   }
 
   cancelProcessingTask(taskId:number){
