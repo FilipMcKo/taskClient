@@ -6,12 +6,17 @@ import { Task } from 'src/app/models/task.model';
   providedIn: 'root'
 })
 export class TaskService {
+  
   private baseUrl:string = "http://localhost:8080";
 
   constructor(private _http:HttpClient) { }
 
   getAllTasksPaged(page:number){
     return this._http.get<Task[]>(this.baseUrl + '/tasksPage?page=' + page);
+  }
+
+  getAllTasks() {
+    return this._http.get<Task[]>(this.baseUrl + '/tasks');
   }
 
   getTaskById(taskId:number){

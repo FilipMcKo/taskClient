@@ -28,3 +28,7 @@
     right: 50px;
     top: 40px
 }
+
+thead>tr>th {
+    cursor: pointer;
+}

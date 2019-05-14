@@ -15,11 +15,24 @@ export class TaskComponent implements OnInit {
   private tasks:Array<Task>;
   private pages:Array<number>;
   private task:TaskData;
+  key: string = 'name';
+  reverse: boolean = false;
+  p: number = 1;
 
   constructor(private _myService:TaskService) { }
 
   ngOnInit() {
-    this.getAllTasksPaged();
+    this.getAllTasks();
+  }
+
+  sort(key){
+    console.log('sort');
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
+  sortTasksByName(){
+    this.tasks.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   setPage(i:number, event:any){
@@ -28,15 +41,20 @@ export class TaskComponent implements OnInit {
       this.getAllTasksPaged();
   }
 
-  sortTasksByName(){
-    this.tasks.sort((a, b) => a.name.localeCompare(b.name));
-  }
-
   getAllTasksPaged(){
     this._myService.getAllTasksPaged(this.page).subscribe(
       data=>{
         this.tasks = data['content'].map((task: Task) => new Task().deserialize(task)),
         this.pages = new Array(data['totalPages'])
+      }
+    );
+  }
+
+  getAllTasks(){
+    this._myService.getAllTasks().subscribe(
+      data=>{
+        console.log(data),
+        this.tasks = data.map((task: Task) => new Task().deserialize(task))
       }
     );
   }

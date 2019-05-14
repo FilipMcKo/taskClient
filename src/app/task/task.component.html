@@ -1,17 +1,15 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
-      <table class="table table-stripped">
-        
+      <table class="table table-stripped">       
           <td><input id="name" #name (keyup.enter)="update(box.value)" type="text" class="form-control" value="Name" width="50"></td>
           <td><input id="description" #description (keyup.enter)="update(box.value)" type="text" class="form-control" value="Description" width="50"></td>
           <td><button id="addNewButton" (click)="addNewTask(name.value, description.value)" class="btn btn-success" >Add new task</button></td>
-        
       </table>
       <table class="table table-stripped" >
           <thead>
               <tr>
-                <th (click)="sortTasksByName()" scope="col"  style="cursor: pointer;">Name</th>
+                <th (click)="sort('name')">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Current state</th>
                 <th scope="col">Progress percentage</th>
@@ -21,7 +19,7 @@
               </tr>
             </thead>
         <tbody>
-          <tr *ngFor="let task of tasks | orderBy: name">
+          <tr *ngFor="let task of tasks | orderBy: key : reverse | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
             <td>{{task.name}}</td>
             <td>{{task.description}}</td>
             <td>{{task.currentState}}</td>
@@ -33,9 +31,10 @@
             <td>{{hello}}</td> -->
           </tr>
         </tbody>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </table>
       <hr>
-      <form class="form-inline">
+      <!-- <form class="form-inline">
       <ul class="nav nav-pills">
         <li class="nav-item" *ngFor="let p of pages; let i=index">
           <a class="nav-link" href="" (click)="setPage(i,$event)" 
@@ -46,7 +45,7 @@
         <input #box (keyup.enter) = "update(box.value)" type = "number" class = "form-control">
       </div>
       </ul>
-    </form>
+    </form> -->
     </div>
   </div>
 </div>
