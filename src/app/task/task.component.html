@@ -11,7 +11,7 @@
       <table class="table table-stripped" >
           <thead>
               <tr>
-                <th (click)="sortTasksByName()" scope="col" >Name</th>
+                <th (click)="sortTasksByName()" scope="col"  style="cursor: pointer;">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Current state</th>
                 <th scope="col">Progress percentage</th>
@@ -21,14 +21,14 @@
               </tr>
             </thead>
         <tbody>
-          <tr *ngFor="let task of tasks">
+          <tr *ngFor="let task of tasks | orderBy: name">
             <td>{{task.name}}</td>
             <td>{{task.description}}</td>
             <td>{{task.currentState}}</td>
             <td>{{task.progressPercentage}}</td>
-            <td><button (click)="startProcessingTask(task.id)" class="btn btn-success" [disabled] = "task.cantBeStarted()" >Start</button></td>
-            <td><button (click)="cancelProcessingTask(task.id)" class="btn btn-warning" [disabled]="task.cantBeCancelled()">Cancel</button></td>
-            <td><button (click)="removeTask(task.id)"  class="btn btn-danger">Delete</button></td>
+            <td><button (click) = "startProcessingTask(task.id)" class = "btn btn-success" [disabled] = "task.cantBeStarted()" >Start</button></td>
+            <td><button (click) = "cancelProcessingTask(task.id)" class = "btn btn-warning" [disabled] = "task.cantBeCancelled()">Cancel</button></td>
+            <td><button (click) = "removeTask(task.id)"  class="btn btn-danger">Delete</button></td>
             <!-- <td><input [(ngModel)] ="hello" type = "text"> </td>
             <td>{{hello}}</td> -->
           </tr>
@@ -42,9 +42,8 @@
           [ngClass]="{'active':i==page}">{{i+1}}</a>
         </li>
         <div>
-        <button type="button" (click)="setPage(box.value-1,$event)" class="btn btn-info" style=margin-left:25px>Go to page: </button>
-        <input #box (keyup.enter)="update(box.value)" type="number" class="form-control">
-        <button type="button" (click)="sortTasksByName()" class="btn btn-success" style="position: absolute; right: 0;">Sort by Name</button>
+        <button type = "button" (click) = "setPage(box.value-1,$event)" class = "btn btn-info" style = margin-left:25px>Go to page: </button>
+        <input #box (keyup.enter) = "update(box.value)" type = "number" class = "form-control">
       </div>
       </ul>
     </form>

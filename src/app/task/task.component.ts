@@ -1,4 +1,3 @@
-import { DataSharingService } from './../datasharing.service';
 import { map } from 'rxjs/operators';
 import { TaskService } from '../task.service';
 import { Component, OnInit } from '@angular/core';
@@ -30,7 +29,7 @@ export class TaskComponent implements OnInit {
   }
 
   sortTasksByName(){
-  
+    this.tasks.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   getAllTasksPaged(){
@@ -47,7 +46,7 @@ export class TaskComponent implements OnInit {
   }
 
   addNewTask(name: string, description: string){
-    this._myService.addNewTask(name, description);
+    this._myService.addNewTask(name, description).subscribe();
   }
 
 
@@ -57,7 +56,6 @@ export class TaskComponent implements OnInit {
   na razie to jest tymczasowa copypasta
   */
   startProcessingTask(taskId:number){
-    //this.datasharingService.taskCantBeStarted.next(true);
     this._myService.startProcessingTask(taskId).subscribe(
       resp=>{
         console.log(resp);
@@ -66,7 +64,6 @@ export class TaskComponent implements OnInit {
         error.console.error();
       }
     )
-    this.getAllTasksPaged();
   }
 
   cancelProcessingTask(taskId:number){

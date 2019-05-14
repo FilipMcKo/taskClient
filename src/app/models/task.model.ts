@@ -1,6 +1,3 @@
-import { DataSharingService } from './../datasharing.service';
-
-
 export class Task {
     id: number;
     name: string;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Task } from 'src/app/models/task.model';
 
 @Injectable({
@@ -23,13 +23,8 @@ export class TaskService {
   }
 
   addNewTask(name:string, description:string){
-    var obj: any = {
-      "name": name,
-      "description": description
-    }
-    this._http.post(this.baseUrl + '/tasks/', obj);
+    return this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null)
   }
-
   startProcessingTask(taskId:number){
     return this._http.put(this.baseUrl + '/tasks/' + taskId + '/start',null);
   }
