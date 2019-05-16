@@ -3,9 +3,10 @@
     <div class="card-body">
       <table class="table table-stripped">       
           <td><input id="name" #name (keyup.enter)="update(box.value)" type="text" class="form-control" value="Name" width="50"></td>
-          <td><input id="description" #description (keyup.enter)="update(box.value)" type="text" class="form-control" value="Description" width="50"></td>
+          <td><input id="descriptionInput" #description (keyup.enter)="update(box.value)" type="text" class="form-control" value="Description" width="50"></td>
           <td><button id="addNewButton" (click)="addNewTask(name.value, description.value)" class="btn btn-success" >Add new task</button></td>
       </table>
+      <form name = "testform">
       <table class="table table-stripped" >
           <thead>
               <tr>
@@ -21,18 +22,17 @@
         <tbody>
           <tr *ngFor="let task of tasks | orderBy: key : reverse | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
             <td>{{task.name}}</td>
-            <td>{{task.description}}</td>
+            <td id = "description">{{task.description}}</td>   <!--tutaj jakby nie używam instancji klasy Task-->
             <td>{{task.currentState}}</td>
             <td>{{task.progressPercentage}}</td>
-            <td><button (click) = "startProcessingTask(task.id)" class = "btn btn-success" [disabled] = "task.cantBeStarted()" >Start</button></td>
-            <td><button (click) = "cancelProcessingTask(task.id)" class = "btn btn-warning" [disabled] = "task.cantBeCancelled()">Cancel</button></td>
+            <td><button (click) = "startProcessingTask(task)" class = "btn btn-success" [disabled] = "task.currentState !== 'NEW'">Start</button></td> <!--ale tu już używam instancji klasy task bo mam dostęp do tych funkcji-->
+            <td><button (click) = "cancelProcessingTask(task)" class = "btn btn-warning" [disabled] = "task.currentState !== 'RUNNING'">Cancel</button></td>
             <td><button (click) = "removeTask(task.id)"  class="btn btn-danger">Delete</button></td>
-            <!-- <td><input [(ngModel)] ="hello" type = "text"> </td>
-            <td>{{hello}}</td> -->
           </tr>
         </tbody>
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </table>
+    </form>
       <hr>
       <!-- <form class="form-inline">
       <ul class="nav nav-pills">

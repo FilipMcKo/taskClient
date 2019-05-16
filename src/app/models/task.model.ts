@@ -1,3 +1,9 @@
+import { Component, setTestabilityGetter } from '@angular/core';
+
+// @Component({
+//   selector: 'task-model',
+//   templateUrl: './task.model.html'
+// })
 export class Task {
     id: number;
     name: string;
@@ -10,13 +16,17 @@ export class Task {
       Object.assign(this, input);
       return this;
     }
-
-    cantBeStarted():boolean{
-      this.taskCantBeStarted = !(this.currentState === "NEW");
-      return this.taskCantBeStarted;
+    delay(ms: number) {
+      return new Promise( resolve => setTimeout(resolve, ms) );
     }
 
-    cantBeCancelled():boolean{
-      return !(this.currentState === "RUNNING");
+     cantBeStarted(currentState: string, taskid: number):boolean{
+      //await this.delay(300);
+      //console.log('start', taskid);
+      return !(currentState === "NEW");
+    }
+
+    cantBeCancelled(currentState: string):boolean{
+      return !(currentState === "RUNNING");
     }
   }

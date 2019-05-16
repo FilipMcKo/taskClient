@@ -18,7 +18,7 @@
 #name{
     width: 300px;
 }
-#description{
+#descriptionInput{
     width: 550px;
 }
 
@@ -31,4 +31,8 @@
 
 thead>tr>th {
     cursor: pointer;
+}
+
+#description{
+    word-break: break-word;
 }

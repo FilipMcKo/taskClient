@@ -8,11 +8,13 @@ import { TaskComponent } from './task/task.component';
 import { FormsModule } from '@angular/forms';
 import { Ng2OrderModule } from 'ng2-order-pipe'; 
 import {NgxPaginationModule} from 'ngx-pagination';
+import { Task } from './models/task.model';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskComponent
+    TaskComponent,
+    //Task
   ],
   imports: [
     BrowserModule,

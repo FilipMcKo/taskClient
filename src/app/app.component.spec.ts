@@ -1,12 +1,28 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { TaskComponent } from './task/task.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import { TaskService } from './task.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        TaskComponent
       ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    NgxPaginationModule,
+    Ng2OrderModule,
+  ],
+  providers: [TaskService]
     }).compileComponents();
   }));
 
@@ -22,10 +38,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('taskClient');
   });
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to taskClient!');
-  });
 });

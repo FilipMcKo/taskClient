@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Task } from 'src/app/models/task.model';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { Task } from 'src/app/models/task.model';
 })
 export class TaskService {
   
-  private baseUrl:string = "http://localhost:8080";
+  baseUrl:string = "http://localhost:8080";
 
   constructor(private _http:HttpClient) { }
 
