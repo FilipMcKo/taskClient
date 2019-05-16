@@ -1,7 +1,3 @@
-
-https://i.ibb.co/9ZDfFX5/Przechwytywanie.png
-
-
 # TaskClient
 ![alt text](https://i.ibb.co/9ZDfFX5/Przechwytywanie.png)
 This is front-end client created for taskManager REST API - avalible in other repository. 
