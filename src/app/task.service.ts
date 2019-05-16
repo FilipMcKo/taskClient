@@ -6,12 +6,12 @@ import { Task } from 'src/app/models/task.model';
   providedIn: 'root'
 })
 export class TaskService {
-  
-  baseUrl:string = "http://localhost:8080";
 
-  constructor(private _http:HttpClient) { }
+  baseUrl: string = "http://localhost:8080";
 
-  getAllTasksPaged(page:number){
+  constructor(private _http: HttpClient) { }
+
+  getAllTasksPaged(page: number) {
     return this._http.get<Task[]>(this.baseUrl + '/tasksPage?page=' + page);
   }
 
@@ -19,23 +19,23 @@ export class TaskService {
     return this._http.get<Task[]>(this.baseUrl + '/tasks');
   }
 
-  getTaskById(taskId:number){
+  getTaskById(taskId: number) {
     return this._http.get(this.baseUrl + '/tasks/' + taskId);
   }
 
-  removeTask(taskId:number){
+  removeTask(taskId: number) {
     return this._http.delete(this.baseUrl + '/tasks/' + taskId);
   }
 
-  addNewTask(name:string, description:string){
-    return this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null)
+  addNewTask(name: string, description: string) {
+    return this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null);
   }
-  startProcessingTask(taskId:number){
-    return this._http.put(this.baseUrl + '/tasks/' + taskId + '/start',null);
+  startProcessingTask(taskId: number) {
+    return this._http.put(this.baseUrl + '/tasks/' + taskId + '/start', null);
   }
 
-  cancelProcessingTask(taskId:number){
-    return this._http.put(this.baseUrl + '/tasks/' + taskId + '/cancel',null);
+  cancelProcessingTask(taskId: number) {
+    return this._http.put(this.baseUrl + '/tasks/' + taskId + '/cancel', null);
   }
 
 }

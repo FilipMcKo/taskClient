@@ -15,14 +15,14 @@ describe('AppComponent', () => {
         AppComponent,
         TaskComponent
       ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    NgxPaginationModule,
-    Ng2OrderModule,
-  ],
-  providers: [TaskService]
+      imports: [
+        BrowserModule,
+        HttpClientModule,
+        FormsModule,
+        NgxPaginationModule,
+        Ng2OrderModule
+      ],
+      providers: [TaskService]
     }).compileComponents();
   }));
 

@@ -1,51 +1,42 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
-      <table class="table table-stripped">       
-          <td><input id="name" #name (keyup.enter)="update(box.value)" type="text" class="form-control" value="Name" width="50"></td>
-          <td><input id="descriptionInput" #description (keyup.enter)="update(box.value)" type="text" class="form-control" value="Description" width="50"></td>
-          <td><button id="addNewButton" (click)="addNewTask(name.value, description.value)" class="btn btn-success" >Add new task</button></td>
+      <table class="table table-stripped">
+        <td><input id="name" #name (keyup.enter)="update(box.value)" type="text" class="form-control" value="Name"
+            width="50"></td>
+        <td><input id="descriptionInput" #description (keyup.enter)="update(box.value)" type="text" class="form-control"
+            value="Description"></td>
+        <td><button id="addNewButton" (click)="addNewTask(name.value, description.value)" class="btn btn-success">Add new task</button></td>
       </table>
-      <form name = "testform">
-      <table class="table table-stripped" >
+      <form name="testform">
+        <table class="table table-stripped">
           <thead>
-              <tr>
-                <th (click)="sort('name')">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Current state</th>
-                <th scope="col">Progress percentage</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-        <tbody>
-          <tr *ngFor="let task of tasks | orderBy: key : reverse | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
-            <td>{{task.name}}</td>
-            <td id = "description">{{task.description}}</td>   <!--tutaj jakby nie używam instancji klasy Task-->
-            <td>{{task.currentState}}</td>
-            <td>{{task.progressPercentage}}</td>
-            <td><button (click) = "startProcessingTask(task)" class = "btn btn-success" [disabled] = "task.currentState !== 'NEW'">Start</button></td> <!--ale tu już używam instancji klasy task bo mam dostęp do tych funkcji-->
-            <td><button (click) = "cancelProcessingTask(task)" class = "btn btn-warning" [disabled] = "task.currentState !== 'RUNNING'">Cancel</button></td>
-            <td><button (click) = "removeTask(task.id)"  class="btn btn-danger">Delete</button></td>
-          </tr>
-        </tbody>
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </table>
-    </form>
+            <tr>
+              <th (click)="sort('name')">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Current state</th>
+              <th scope="col">Progress percentage</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let task of tasks | orderBy: key : reverse | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+              <td>{{task.name}}</td>
+              <td id="description">{{task.description}}</td>
+              <td>{{task.currentState}}</td>
+              <td>{{task.progressPercentage}}</td>
+              <td><button (click)="startProcessingTask(task)" class="btn btn-success" [disabled]="task.currentState !== 'NEW'">Start</button></td>
+              <td><button (click)="cancelProcessingTask(task)" class="btn btn-warning" [disabled]="task.currentState !== 'RUNNING'">Cancel</button></td>
+              <td><button (click)="removeTask(task)" class="btn btn-danger">Delete</button></td>
+            </tr>
+          </tbody>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </table>
+      </form>
       <hr>
-      <!-- <form class="form-inline">
-      <ul class="nav nav-pills">
-        <li class="nav-item" *ngFor="let p of pages; let i=index">
-          <a class="nav-link" href="" (click)="setPage(i,$event)" 
-          [ngClass]="{'active':i==page}">{{i+1}}</a>
-        </li>
-        <div>
-        <button type = "button" (click) = "setPage(box.value-1,$event)" class = "btn btn-info" style = margin-left:25px>Go to page: </button>
-        <input #box (keyup.enter) = "update(box.value)" type = "number" class = "form-control">
-      </div>
-      </ul>
-    </form> -->
     </div>
   </div>
 </div>
