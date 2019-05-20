@@ -52,25 +52,17 @@ export class TaskComponent implements OnInit {
   }
 
   startProcessingTask(task: Task) {
-    this._myService.startProcessingTask(task.id).subscribe(
-      saved => { 
-        console.log(saved);
-        //task.name = saved;
-         Object.assign(task, saved); 
-         console.log(saved);
-      }
-    );
-    // task.currentState = 'RUNNING';
+    task = this._myService.startProcessingTask(task);
+    // this._myService.startProcessingTask(task).subscribe(
+    //   data => {
+    //     task = task.deserialize(data);
+    //   }
+    // )
   }
 
   cancelProcessingTask(task: Task) {
-   this._myService.cancelProcessingTask(task.id).subscribe({
-    error(err) {console.log('error = ' + <Error>err)}
-   });
-    //console.log(this._myService.getTaskById(task.id));
-    if (task.currentState === 'RUNNING') {
-      task.currentState = 'CANCELLED';
-      task.progressPercentage = 0;
-    }
+    this._myService.cancelProcessingTask(task.id).subscribe(data => {
+      task = task.deserialize(data);
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Task } from 'src/app/models/task.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,12 @@ export class TaskService {
   addNewTask(name: string, description: string) {
     return this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null);
   }
-  startProcessingTask(taskId: number) {
-    return this._http.put(this.baseUrl + '/tasks/' + taskId + '/start', null);
+
+  startProcessingTask(task: Task) {
+    this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).subscribe(
+      data => {task = task.deserialize(data)}
+    );
+      return task;
   }
 
   cancelProcessingTask(taskId: number) {
