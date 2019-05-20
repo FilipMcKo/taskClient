@@ -13,14 +13,15 @@ export class TaskService {
   constructor(private _http: HttpClient) { }
 
   getAllTasks() {
-    let tasks: Array<Task>;
-    let task: Task = new Task();
-    this._http.get<Task[]>(this.baseUrl + '/tasks').forEach(
-      data => { tasks = data.map((_task: Task) => task.deserialize(_task)),
-      console.log(tasks.length)}
-    )
+    return this._http.get<Task[]>(this.baseUrl + '/tasks');
+    // let tasks: Array<Task>;
+    // let task: Task = new Task();
+    // this._http.get<Task[]>(this.baseUrl + '/tasks').subscribe(
+    //   data => { tasks = data.map((_task: Task) => task.deserialize(_task)),
+    //   console.log(tasks.length)}
+    // )
     
-    return tasks;
+    // return tasks;
   }
 
   getTaskById(taskId: number) {

@@ -28,7 +28,11 @@ export class TaskComponent implements OnInit {
   }
 
   getAllTasks() {
-    this.tasks = this._myService.getAllTasks();
+    //this.tasks = this._myService.getAllTasks();
+    this._myService.getAllTasks().subscribe(
+        data => { tasks = data.map((_task: Task) => task.deserialize(_task)),
+        console.log(tasks.length)}
+      )
   }
 
   removeTask(task: Task) {
