@@ -28,11 +28,7 @@ export class TaskComponent implements OnInit {
   }
 
   getAllTasks() {
-    this._myService.getAllTasks().subscribe(
-      data => {
-        this.tasks = data.map((task: Task) => new Task().deserialize(task))
-      }
-    );
+    this.tasks = this._myService.getAllTasks();
   }
 
   removeTask(task: Task) {
@@ -43,26 +39,15 @@ export class TaskComponent implements OnInit {
   }
 
   addNewTask(name: string, description: string) {
-    let _this = this;
-    this._myService.addNewTask(name, description).subscribe(
-      data => {
-        _this.tasks.push(new Task().deserialize(data));
-      }
-    );
+    var task: Task = this._myService.addNewTask(name, description);
+    this.tasks.push(task);
   }
 
   startProcessingTask(task: Task) {
     task = this._myService.startProcessingTask(task);
-    // this._myService.startProcessingTask(task).subscribe(
-    //   data => {
-    //     task = task.deserialize(data);
-    //   }
-    // )
   }
 
   cancelProcessingTask(task: Task) {
-    this._myService.cancelProcessingTask(task.id).subscribe(data => {
-      task = task.deserialize(data);
-    });
+    task = this._myService.cancelProcessingTask(task);
   }
 }

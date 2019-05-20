@@ -12,16 +12,23 @@ export class TaskService {
 
   constructor(private _http: HttpClient) { }
 
-  getAllTasksPaged(page: number) {
-    return this._http.get<Task[]>(this.baseUrl + '/tasksPage?page=' + page);
-  }
-
   getAllTasks() {
-    return this._http.get<Task[]>(this.baseUrl + '/tasks');
+    let tasks: Array<Task>;
+    let task: Task = new Task();
+    this._http.get<Task[]>(this.baseUrl + '/tasks').forEach(
+      data => { tasks = data.map((_task: Task) => task.deserialize(_task)),
+      console.log(tasks.length)}
+    )
+    
+    return tasks;
   }
 
   getTaskById(taskId: number) {
-    return this._http.get(this.baseUrl + '/tasks/' + taskId);
+    var task: Task = new Task();
+    this._http.get(this.baseUrl + '/tasks/' + taskId).subscribe(
+      data => { task = task.deserialize(data);}
+    );
+    return task;
   }
 
   removeTask(taskId: number) {
@@ -29,18 +36,27 @@ export class TaskService {
   }
 
   addNewTask(name: string, description: string) {
-    return this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null);
+    var task: Task = new Task();
+    this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null).subscribe(
+      data => {
+        task = task.deserialize(data);
+      }
+    )
+    return task;
   }
 
   startProcessingTask(task: Task) {
     this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).subscribe(
-      data => {task = task.deserialize(data)}
+      data => { task = task.deserialize(data) }
     );
-      return task;
+    return task;
   }
 
-  cancelProcessingTask(taskId: number) {
-    return this._http.put(this.baseUrl + '/tasks/' + taskId + '/cancel', null);
+  cancelProcessingTask(task: Task) {
+    this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).subscribe(
+      data => { task = task.deserialize(data) }
+    );
+    return task;
   }
 
 }
