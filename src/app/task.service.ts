@@ -1,3 +1,4 @@
+import { TaskCreationRequest } from './models/taskCreationRequest.model';
 import { Injectable } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { HttpClient } from '@angular/common/http';
@@ -32,8 +33,9 @@ export class TaskService {
     return this._http.delete(this.baseUrl + '/tasks/' + taskId);
   }
 
-  addNewTask(name: string, description: string) {
-    return this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null).map(
+  addNewTask(taskCreationRequest: TaskCreationRequest) {
+    console.log('from service: ' + taskCreationRequest.name);
+    return this._http.post(this.baseUrl + '/tasks', taskCreationRequest).map(
       data => {
         return new Task().deserialize(data);
       }

@@ -49,12 +49,6 @@ export class TaskComponent implements OnInit {
     );
   }
 
-  addNewTask(name: string, description: string) {
-    this._myService.addNewTask(name, description).subscribe(
-      task => { this.tasks.push(task) }
-    );
-  }
-
   startProcessingTask(task: Task) {
     this._myService.startProcessingTask(task).subscribe(
       _task => { task.assignValuesOf(_task); }
