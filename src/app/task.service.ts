@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Task } from 'src/app/models/task.model';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/operator/map';
 
 @Injectable({
   providedIn: 'root'
@@ -13,23 +13,19 @@ export class TaskService {
   constructor(private _http: HttpClient) { }
 
   getAllTasks() {
-    return this._http.get<Task[]>(this.baseUrl + '/tasks');
-    // let tasks: Array<Task>;
-    // let task: Task = new Task();
-    // this._http.get<Task[]>(this.baseUrl + '/tasks').subscribe(
-    //   data => { tasks = data.map((_task: Task) => task.deserialize(_task)),
-    //   console.log(tasks.length)}
-    // )
-    
-    // return tasks;
+    return this._http.get<Task[]>(this.baseUrl + '/tasks').map(
+      data => {
+        return data.map((task: Task) => new Task().deserialize(task));
+      }
+    );
   }
 
   getTaskById(taskId: number) {
-    var task: Task = new Task();
-    this._http.get(this.baseUrl + '/tasks/' + taskId).subscribe(
-      data => { task = task.deserialize(data);}
+    this._http.get(this.baseUrl + '/tasks/' + taskId).map(
+      data => {
+        return new Task().deserialize(data);
+      }
     );
-    return task;
   }
 
   removeTask(taskId: number) {
@@ -37,27 +33,27 @@ export class TaskService {
   }
 
   addNewTask(name: string, description: string) {
-    var task: Task = new Task();
-    this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null).subscribe(
+    return this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null).map(
       data => {
-        task = task.deserialize(data);
+        return new Task().deserialize(data);
       }
-    )
-    return task;
+    );
   }
 
   startProcessingTask(task: Task) {
-    this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).subscribe(
-      data => { task = task.deserialize(data) }
+    return this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).map(
+      data => {
+        return new Task().deserialize(data);
+      }
     );
-    return task;
   }
 
   cancelProcessingTask(task: Task) {
-    this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).subscribe(
-      data => { task = task.deserialize(data) }
+    return this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).map(
+      data => {
+       return new Task().deserialize(data);
+      }
     );
-    return task;
   }
 
 }

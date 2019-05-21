@@ -13,6 +13,9 @@ export class TaskComponent implements OnInit {
   pages: Array<number>;
   key: string = 'name';
   reverse: boolean = false;
+
+  taskToBeCreated: Task;
+
   p: number = 1;
 
   constructor(private _myService: TaskService) {
@@ -28,30 +31,44 @@ export class TaskComponent implements OnInit {
   }
 
   getAllTasks() {
-    //this.tasks = this._myService.getAllTasks();
     this._myService.getAllTasks().subscribe(
-        data => { tasks = data.map((_task: Task) => task.deserialize(_task)),
-        console.log(tasks.length)}
-      )
+      data => {
+        this.tasks = data;
+      })
   }
 
   removeTask(task: Task) {
-    this._myService.removeTask(task.id).subscribe();
-    this.tasks = this.tasks.filter(function (_task) {
-      return _task.id !== task.id;
-    });
+    this._myService.removeTask(task.id).subscribe(
+      data => {
+        if (data === task.id) {
+          this.tasks = this.tasks.filter(function (_task) {
+            return _task.id !== task.id;
+          })
+        }
+      }
+    );
   }
 
   addNewTask(name: string, description: string) {
-    var task: Task = this._myService.addNewTask(name, description);
-    this.tasks.push(task);
+    this._myService.addNewTask(name, description).subscribe(
+      task => { this.tasks.push(task) }
+    );
   }
 
   startProcessingTask(task: Task) {
-    task = this._myService.startProcessingTask(task);
+    this._myService.startProcessingTask(task).subscribe(
+      _task => { task.assignValuesOf(_task); }
+      // jeszcze jakiś popup informujący o dokonanaje zmianie (to samo w pozostałych metodach) - czyli implementacja jakiegoś equals
+    );
   }
 
   cancelProcessingTask(task: Task) {
-    task = this._myService.cancelProcessingTask(task);
+    this._myService.cancelProcessingTask(task).subscribe(
+      _task => { task.assignValuesOf(_task); }
+      // jeszcze jakiś popup informujący o dokonanaje zmianie (to samo w pozostałych metodach) - czyli implementacja jakiegoś equals
+    );
   }
 }
+
+//TODO: obsługa błędów które dostaję od api powinny się odbywać w jakimś httpHandlerze, zeby nie duplikować kodu w każdym subscribe
+
