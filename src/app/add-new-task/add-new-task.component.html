@@ -1,10 +1,10 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
-      <table class="table table-stripped">
-        <td><input id="name" #name (keyup.enter)="update(box.value)" type="text" class="form-control" placeholder="Name" width="50"></td>
-        <td><input id="descriptionInput" #description (keyup.enter)="update(box.value)" type="text" class="form-control" placeholder="Description"></td>
-        <td><button id="addNewButton" (click)="addNewTask(name.value, description.value)" class="btn btn-success">Add new task</button></td>
+      <table class="table table-stripped" >
+        <td><input id="name"  type="text" class="form-control" placeholder="Name" [(ngModel)] = "_taskCreationRequest.name" ></td>
+        <td><input id="desc" type="text" class="form-control"  placeholder="Desription" [(ngModel)] = "_taskCreationRequest.description" ></td>
+        <td><button id="addNewButton" (click)="addNewTask()" class="btn btn-success">Add new task</button></td>
       </table>
     </div>
   </div>

@@ -1,7 +1,10 @@
 import { TaskService } from '../task.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -46,12 +49,6 @@ export class TaskComponent implements OnInit {
           })
         }
       }
-    );
-  }
-
-  addNewTask(name: string, description: string) {
-    this._myService.addNewTask(name, description).subscribe(
-      task => { this.tasks.push(task) }
     );
   }
 
