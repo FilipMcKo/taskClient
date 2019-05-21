@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Task } from 'src/app/models/task.model';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/operator/map';
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +12,20 @@ export class TaskService {
 
   constructor(private _http: HttpClient) { }
 
-  getAllTasksPaged(page: number) {
-    return this._http.get<Task[]>(this.baseUrl + '/tasksPage?page=' + page);
-  }
-
   getAllTasks() {
-    return this._http.get<Task[]>(this.baseUrl + '/tasks');
+    return this._http.get<Task[]>(this.baseUrl + '/tasks').map(
+      data => {
+        return data.map((task: Task) => new Task().deserialize(task));
+      }
+    );
   }
 
   getTaskById(taskId: number) {
-    return this._http.get(this.baseUrl + '/tasks/' + taskId);
+    this._http.get(this.baseUrl + '/tasks/' + taskId).map(
+      data => {
+        return new Task().deserialize(data);
+      }
+    );
   }
 
   removeTask(taskId: number) {
@@ -29,18 +33,27 @@ export class TaskService {
   }
 
   addNewTask(name: string, description: string) {
-    return this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null);
+    return this._http.post(this.baseUrl + '/tasks?decription=' + description + '&name=' + name, null).map(
+      data => {
+        return new Task().deserialize(data);
+      }
+    );
   }
 
   startProcessingTask(task: Task) {
-    this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).subscribe(
-      data => {task = task.deserialize(data)}
+    return this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).map(
+      data => {
+        return new Task().deserialize(data);
+      }
     );
-      return task;
   }
 
-  cancelProcessingTask(taskId: number) {
-    return this._http.put(this.baseUrl + '/tasks/' + taskId + '/cancel', null);
+  cancelProcessingTask(task: Task) {
+    return this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).map(
+      data => {
+       return new Task().deserialize(data);
+      }
+    );
   }
 
 }
