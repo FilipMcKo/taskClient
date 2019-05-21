@@ -10,22 +10,19 @@ import { TaskComponent } from '../task/task.component';
 })
 export class AddNewTaskComponent implements OnInit {
 
-
   taskName: string;
   taskDescription: string;
-
-  constructor(private _myService: TaskService) {
+  _taskCreationRequest: TaskCreationRequest;
+  constructor(private _myService: TaskService, private _taskComponent: TaskComponent) {
   }
 
   ngOnInit() {
+    this._taskCreationRequest = new TaskCreationRequest("","");
   }
 
   addNewTask() {
-    let taskCreationRequest: TaskCreationRequest = new TaskCreationRequest(this.taskName, this.taskDescription);
-    console.log('addNewTask: ' + taskCreationRequest.name + '  ' + taskCreationRequest.description);
-    this._myService.addNewTask(taskCreationRequest).subscribe(
-    
-     //task => { taskComponent.tasks.push(task) }
+    this._myService.addNewTask(this._taskCreationRequest).subscribe(
+     task => { this._taskComponent.tasks.push(task) }
     );
   }
 

@@ -34,7 +34,6 @@ export class TaskService {
   }
 
   addNewTask(taskCreationRequest: TaskCreationRequest) {
-    console.log('from service: ' + taskCreationRequest.name);
     return this._http.post(this.baseUrl + '/tasks', taskCreationRequest).map(
       data => {
         return new Task().deserialize(data);

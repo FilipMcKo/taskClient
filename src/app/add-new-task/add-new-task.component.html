@@ -1,9 +1,9 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
-      <table class="table table-stripped">
-        <td><input id="name"  type="text" class="form-control" placeholder="Name" [(ngModel)] = "taskName"></td>
-        <td><input id="desc" type="text" class="form-control" placeholder="Description" [(ngModel)] = "taskDescription"></td>
+      <table class="table table-stripped" >
+        <td><input id="name"  type="text" class="form-control" placeholder="Name" [(ngModel)] = "_taskCreationRequest.name" ></td>
+        <td><input id="desc" type="text" class="form-control"  placeholder="Desription" [(ngModel)] = "_taskCreationRequest.description" ></td>
         <td><button id="addNewButton" (click)="addNewTask()" class="btn btn-success">Add new task</button></td>
       </table>
     </div>

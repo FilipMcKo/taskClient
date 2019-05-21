@@ -1,7 +1,10 @@
 import { TaskService } from '../task.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
