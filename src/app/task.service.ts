@@ -2,7 +2,9 @@ import { TaskCreationRequest } from './models/taskCreationRequest.model';
 import { Injectable } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { HttpClient } from '@angular/common/http';
-import 'rxjs/add/operator/map';
+
+import { Observable, Subscription } from 'rxjs/Rx';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,9 @@ import 'rxjs/add/operator/map';
 export class TaskService {
 
   baseUrl: string = "http://localhost:8080";
+  observableOfTaskChanges: Observable<Task>;
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
 
   getAllTasks() {
     return this._http.get<Task[]>(this.baseUrl + '/tasks').map(
@@ -42,19 +45,21 @@ export class TaskService {
   }
 
   startProcessingTask(task: Task) {
-    return this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).map(
+    let startObservable: Observable<Task> =  this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).map(
       data => {
         return new Task().deserialize(data);
       }
     );
+    this.observableOfTaskChanges.concat(startObservable);
   }
 
   cancelProcessingTask(task: Task) {
-    return this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).map(
+    let cancelObservable: Observable<Task> = this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).map(
       data => {
-       return new Task().deserialize(data);
+        return new Task().deserialize(data);
       }
     );
+    this.observableOfTaskChanges.concat(cancelObservable);
   }
 
 }

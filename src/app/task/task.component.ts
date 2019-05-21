@@ -26,6 +26,12 @@ export class TaskComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTasks();
+    // this._myService.observableOfTaskChanges.subscribe(
+    //   data => {
+    //     let task: Task = this.tasks.find(x => x.id === data.id);
+    //     task.assignValuesOf(data);
+    //   }
+    // )
   }
 
   sort(key: string) {
@@ -36,6 +42,7 @@ export class TaskComponent implements OnInit {
   getAllTasks() {
     this._myService.getAllTasks().subscribe(
       data => {
+        console.log(data);
         this.tasks = data;
       })
   }
@@ -53,19 +60,14 @@ export class TaskComponent implements OnInit {
   }
 
   startProcessingTask(task: Task) {
-    this._myService.startProcessingTask(task).subscribe(
-      _task => { task.assignValuesOf(_task); }
-      // jeszcze jakiś popup informujący o dokonanaje zmianie (to samo w pozostałych metodach) - czyli implementacja jakiegoś equals
-    );
+    this._myService.startProcessingTask(task);
   }
 
   cancelProcessingTask(task: Task) {
-    this._myService.cancelProcessingTask(task).subscribe(
-      _task => { task.assignValuesOf(_task); }
-      // jeszcze jakiś popup informujący o dokonanaje zmianie (to samo w pozostałych metodach) - czyli implementacja jakiegoś equals
-    );
+    this._myService.cancelProcessingTask(task);
   }
+
 }
 
 //TODO: obsługa błędów które dostaję od api powinny się odbywać w jakimś httpHandlerze, zeby nie duplikować kodu w każdym subscribe
-
+//TODO: jakies popupy informujące o wydarzeniu
