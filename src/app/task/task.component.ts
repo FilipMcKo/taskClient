@@ -20,7 +20,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   // properties to be used while implementing pagination in backend
   // private page: number = 0;
   // private pages: Array<number>;
-    
+
   constructor(private _myService: TaskService) { }
 
   ngOnInit() {
@@ -66,19 +66,6 @@ export class TaskComponent implements OnInit, OnDestroy {
         this.tasks = data;
       })
   }
-
-  removeTask(task: Task) {
-    this._myService.removeTask(task.id);
-  }
-
-  startProcessingTask(task: Task) {
-    this._myService.startProcessingTask(task);
-  }
-
-  cancelProcessingTask(task: Task) {
-    this._myService.cancelProcessingTask(task);
-  }
-
 }
 
 //TODO: obsługa błędów które dostaję od api powinny się odbywać w jakimś httpHandlerze, zeby nie duplikować kodu w każdym subscribe

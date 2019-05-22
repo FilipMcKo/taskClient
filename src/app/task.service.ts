@@ -21,7 +21,7 @@ export class TaskService {
     return this.subjectOfTask.asObservable();
   }
 
-  getObservableOfRemovedTask(){
+  getObservableOfRemovedTask() {
     return this.subjectOfRemovedTask.asObservable();
   }
 

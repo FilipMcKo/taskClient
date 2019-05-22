@@ -9,12 +9,18 @@ import { FormsModule } from '@angular/forms';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AddNewTaskComponent } from './add-new-task/add-new-task.component';
+import { StartTaskComponent } from './start-task/start-task.component';
+import { CancelTaskComponent } from './cancel-task/cancel-task.component';
+import { RemoveTaskComponent } from './remove-task/remove-task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskComponent,
-    AddNewTaskComponent
+    AddNewTaskComponent,
+    StartTaskComponent,
+    CancelTaskComponent,
+    RemoveTaskComponent
   ],
   imports: [
     BrowserModule,

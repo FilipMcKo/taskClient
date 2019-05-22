@@ -10,7 +10,7 @@ export class Task {
     return this;
   }
 
-  assignValuesOf(input: Task){
+  assignValuesOf(input: Task) {
     this.id = input.id;
     this.name = input.name;
     this.description = input.description;

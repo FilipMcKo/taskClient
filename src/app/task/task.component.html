@@ -20,9 +20,9 @@
               <td id="description">{{task.description}}</td>
               <td id="currentState">{{task.currentState}}</td>
               <td id="progressPercentage">{{task.progressPercentage}}</td>
-              <td><button (click)="startProcessingTask(task)" class="btn btn-success" [disabled]="task.currentState !== 'NEW'">Start</button></td>
-              <td><button (click)="cancelProcessingTask(task)" class="btn btn-warning" [disabled]="task.currentState !== 'RUNNING'">Cancel</button></td>
-              <td><button (click)="removeTask(task)" class="btn btn-danger">Delete</button></td>
+              <td><app-start-task [task]="task"></app-start-task></td>
+              <td><app-cancel-task [task]="task"></app-cancel-task></td>
+              <td><app-remove-task [task]="task"></app-remove-task></td>
             </tr>
           </tbody>
         </table>
