@@ -1,6 +1,6 @@
-import { TaskCreationRequest } from './../models/taskCreationRequest.model';
+import { TaskCreationRequest } from '../../models/taskCreationRequest.model';
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../task.service';
+import { TaskService } from '../../task.service';
 
 @Component({
   selector: 'app-add-new-task',

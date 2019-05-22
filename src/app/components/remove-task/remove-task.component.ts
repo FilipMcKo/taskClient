@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TaskService } from '../task.service';
-import { Task } from '../models/task.model';
+import { TaskService } from '../../task.service';
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-remove-task',

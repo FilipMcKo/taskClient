@@ -1,15 +1,15 @@
 import { Subscription } from 'rxjs';
-import { TaskService } from '../task.service';
+import { TaskService } from '../../task.service';
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 
 
 @Component({
-  selector: 'app-task',
-  templateUrl: './task.component.html',
-  styleUrls: ['./task.component.css']
+  selector: 'app-show-tasks',
+  templateUrl: './show-tasks.component.html',
+  styleUrls: ['./show-tasks.component.css']
 })
-export class TaskComponent implements OnInit, OnDestroy {
+export class ShowTasksComponent implements OnInit, OnDestroy {
 
   private subscriptionOfTaskOperations: Subscription;
   private subscriptionOfTaskRemoval: Subscription;

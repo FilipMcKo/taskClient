@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Task } from '../models/task.model';
-import { TaskService } from '../task.service';
+import { Task } from '../../models/task.model';
+import { TaskService } from '../../task.service';
 
 @Component({
   selector: 'app-cancel-task',
