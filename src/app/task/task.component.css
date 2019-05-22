@@ -9,7 +9,7 @@
     overflow-y: hidden;
 }
 
-#newTask > li {
+#newTask>li {
     display: inline-block;
     width: 30%;
     height: 100%;
@@ -19,6 +19,22 @@ thead>tr>th {
     cursor: pointer;
 }
 
-#description{
+#name {
+    width: 20%;
+}
+
+#description {
     word-break: break-word;
+    width: 25%;
+    max-width: 450px;
+}
+
+#currentState {
+    width: 12%;
+    text-align: center;
+}
+
+#progressPercentage {
+    width: 18%;
+    text-align: center;
 }

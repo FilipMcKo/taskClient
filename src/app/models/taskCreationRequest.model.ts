@@ -1,9 +1,10 @@
 export class TaskCreationRequest {
-    name: string;
-    description: string;
 
-    constructor(name: string, description: string) {
-        this.name = name;
-        this.description = description;
+    private name: string;
+    private description: string;
+
+    resetValues() {
+        this.name = null;
+        this.description = null;
     }
-  }
+}
