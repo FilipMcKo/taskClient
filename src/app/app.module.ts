@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,6 +13,9 @@ import { StartTaskComponent } from './components/start-task/start-task.component
 import { CancelTaskComponent } from './components/cancel-task/cancel-task.component';
 import { RemoveTaskComponent } from './components/remove-task/remove-task.component';
 import { ShowTasksComponent } from './components/show-tasks/show-tasks.component';
+import { MatTooltipModule, MatButtonModule } from '@angular/material';
+import { TooltipComponent } from './tooltip/tooltip.component';
+
 
 
 @NgModule({
@@ -21,14 +25,18 @@ import { ShowTasksComponent } from './components/show-tasks/show-tasks.component
     StartTaskComponent,
     CancelTaskComponent,
     RemoveTaskComponent,
-    ShowTasksComponent
+    ShowTasksComponent,
+    TooltipComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     NgxPaginationModule,
-    Ng2OrderModule
+    Ng2OrderModule,
+    MatTooltipModule,
+    MatButtonModule,
+    BrowserAnimationsModule
   ],
   providers: [TaskService],
   bootstrap: [AppComponent]
