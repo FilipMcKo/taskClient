@@ -2,8 +2,8 @@ import { TaskCreationRequest } from './models/taskCreationRequest.model';
 import { Injectable } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { HttpClient } from '@angular/common/http';
-
-import { Observable, Subscription } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import { Subject } from 'rxjs/Rx';
 
 
 @Injectable({
@@ -11,10 +11,19 @@ import { Observable, Subscription } from 'rxjs/Rx';
 })
 export class TaskService {
 
-  baseUrl: string = "http://localhost:8080";
-  observableOfTaskChanges: Observable<Task>;
+  private baseUrl: string = "http://localhost:8080";
+  private subjectOfTask: Subject<Task> = new Subject();
+  private subjectOfRemovedTask: Subject<number> = new Subject();
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
+
+  getCommonObservableOfTask() {
+    return this.subjectOfTask.asObservable();
+  }
+
+  getObservableOfRemovedTask(){
+    return this.subjectOfRemovedTask.asObservable();
+  }
 
   getAllTasks() {
     return this._http.get<Task[]>(this.baseUrl + '/tasks').map(
@@ -24,42 +33,37 @@ export class TaskService {
     );
   }
 
-  getTaskById(taskId: number) {
-    this._http.get(this.baseUrl + '/tasks/' + taskId).map(
-      data => {
-        return new Task().deserialize(data);
-      }
-    );
-  }
-
+  //TODO: przebudować temoveTask tak żeby można było go dołączyć do subjectOfTask i obserwować zmiany w jednym miejscu
   removeTask(taskId: number) {
-    return this._http.delete(this.baseUrl + '/tasks/' + taskId);
+    return this._http.delete(this.baseUrl + '/tasks/' + taskId).subscribe(
+      data => {
+        this.subjectOfRemovedTask.next(<number>data);
+      }
+    )
   }
 
   addNewTask(taskCreationRequest: TaskCreationRequest) {
-    return this._http.post(this.baseUrl + '/tasks', taskCreationRequest).map(
+    this._http.post(this.baseUrl + '/tasks', taskCreationRequest).subscribe(
       data => {
-        return new Task().deserialize(data);
+        this.subjectOfTask.next(new Task().deserialize(data));
       }
     );
   }
 
   startProcessingTask(task: Task) {
-    let startObservable: Observable<Task> =  this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).map(
+    this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).subscribe(
       data => {
-        return new Task().deserialize(data);
+        this.subjectOfTask.next(new Task().deserialize(data));
       }
     );
-    this.observableOfTaskChanges.concat(startObservable);
   }
 
   cancelProcessingTask(task: Task) {
-    let cancelObservable: Observable<Task> = this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).map(
+    this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).subscribe(
       data => {
-        return new Task().deserialize(data);
+        this.subjectOfTask.next(new Task().deserialize(data));
       }
     );
-    this.observableOfTaskChanges.concat(cancelObservable);
   }
 
 }

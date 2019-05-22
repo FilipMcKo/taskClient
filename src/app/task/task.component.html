@@ -15,19 +15,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              *ngFor="let task of tasks | orderBy: key : reverse | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
-              <td>{{task.name}}</td>
+            <tr *ngFor="let task of tasks | orderBy: key : reverse | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+              <td id="name">{{task.name}}</td>
               <td id="description">{{task.description}}</td>
-              <td>{{task.currentState}}</td>
-              <td>{{task.progressPercentage}}</td>
+              <td id="currentState">{{task.currentState}}</td>
+              <td id="progressPercentage">{{task.progressPercentage}}</td>
               <td><button (click)="startProcessingTask(task)" class="btn btn-success" [disabled]="task.currentState !== 'NEW'">Start</button></td>
               <td><button (click)="cancelProcessingTask(task)" class="btn btn-warning" [disabled]="task.currentState !== 'RUNNING'">Cancel</button></td>
               <td><button (click)="removeTask(task)" class="btn btn-danger">Delete</button></td>
             </tr>
           </tbody>
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </form>
       <hr>
     </div>
