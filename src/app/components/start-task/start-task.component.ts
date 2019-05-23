@@ -12,9 +12,11 @@ export class StartTaskComponent {
   @Input()
   task: Task;
 
-  constructor(private _myService: TaskService) { }
+  constructor(private _myService: TaskService) {}
 
   startProcessingTask(task: Task) {
     this._myService.startProcessingTask(task);
   }
+
+  
 }
