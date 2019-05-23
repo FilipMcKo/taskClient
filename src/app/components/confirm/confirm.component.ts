@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SimpleModalComponent } from 'ngx-simple-modal';
 export interface ConfirmModel {
-  title:string;
   message:string;
 }
 @Component({
@@ -10,7 +9,6 @@ export interface ConfirmModel {
   styleUrls: ['./confirm.component.css']
 })
 export class ConfirmComponent extends SimpleModalComponent<ConfirmModel, boolean> implements ConfirmModel {
-  title: string;
   message: string;
   constructor() {
     super();

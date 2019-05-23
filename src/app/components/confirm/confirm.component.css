@@ -1,0 +1,17 @@
+#modal{
+    width: 550px;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 15%;
+    margin-left: 30%;
+}
+
+#modalButton{
+    width: 130px;
+    height: 20 px;
+    right: 50px;
+    top: 40px;
+    margin-bottom: 25px;
+    margin-left: 12px;
+    margin-right: 12px;
+}

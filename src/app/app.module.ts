@@ -1,3 +1,4 @@
+import { ConfirmComponent } from './components/confirm/confirm.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -13,8 +14,9 @@ import { StartTaskComponent } from './components/start-task/start-task.component
 import { CancelTaskComponent } from './components/cancel-task/cancel-task.component';
 import { RemoveTaskComponent } from './components/remove-task/remove-task.component';
 import { ShowTasksComponent } from './components/show-tasks/show-tasks.component';
-import { MatTooltipModule, MatButtonModule } from '@angular/material';
-import { TooltipComponent } from './tooltip/tooltip.component';
+import {  MatButtonModule } from '@angular/material';
+import { CommonModule } from '@angular/common';
+import { SimpleModalModule } from 'ngx-simple-modal';
 
 
 
@@ -26,7 +28,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
     CancelTaskComponent,
     RemoveTaskComponent,
     ShowTasksComponent,
-    TooltipComponent
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -34,11 +36,14 @@ import { TooltipComponent } from './tooltip/tooltip.component';
     FormsModule,
     NgxPaginationModule,
     Ng2OrderModule,
-    MatTooltipModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CommonModule,
+    BrowserModule,
+    SimpleModalModule
   ],
   providers: [TaskService],
+  entryComponents: [ConfirmComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
