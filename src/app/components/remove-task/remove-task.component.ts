@@ -17,19 +17,12 @@ export class RemoveTaskComponent {
   constructor(private _myService: TaskService, private simpleModalService: SimpleModalService) { }
 
   removeTask(task: Task) {
-    let disposable = this.simpleModalService.addModal(ConfirmComponent, {
+    this.simpleModalService.addModal(ConfirmComponent, {
       message: 'Are you sure you want to remove this task?'
     }).subscribe((isConfirmed) => {
       if (isConfirmed) {
         this._myService.removeTask(task.id);
       }
     });
-    //We can close modal calling disposable.unsubscribe();
-    //If modal was not closed manually close it by timeout
-    // setTimeout(() => {
-    //   disposable.unsubscribe();
-    // }, 10000);
   }
-
-
 }

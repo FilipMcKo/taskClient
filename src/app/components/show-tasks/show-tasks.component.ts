@@ -50,11 +50,6 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     )
   }
 
-  ngOnDestroy() {
-    this.subscriptionOfTaskOperations.unsubscribe();
-    this.subscriptionOfTaskRemoval.unsubscribe();
-  }
-
   sort(key: string) {
     this.key = key;
     this.reverse = !this.reverse;
@@ -65,6 +60,11 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
       data => {
         this.tasks = data;
       })
+  }
+
+  ngOnDestroy() {
+    this.subscriptionOfTaskOperations.unsubscribe();
+    this.subscriptionOfTaskRemoval.unsubscribe();
   }
 }
 

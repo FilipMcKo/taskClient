@@ -17,6 +17,7 @@ import { ShowTasksComponent } from './components/show-tasks/show-tasks.component
 import {  MatButtonModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { SimpleModalModule } from 'ngx-simple-modal';
+import { InfoPopupComponent } from './components/info-popup/info-popup.component';
 
 
 
@@ -28,7 +29,8 @@ import { SimpleModalModule } from 'ngx-simple-modal';
     CancelTaskComponent,
     RemoveTaskComponent,
     ShowTasksComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    InfoPopupComponent
   ],
   imports: [
     BrowserModule,
