@@ -1,1 +1,8 @@
-<button (click)="startProcessingTask(task)" class="btn btn-success" [disabled]="task.currentState !== 'NEW'" matTooltip="kur*a">Start</button>
+<div *ngIf="task.currentState === 'NEW'">
+    <button (click)="startProcessingTask(task)" class="btn btn-success">Start</button>
+</div>
+<div *ngIf="task.currentState !== 'NEW'">
+    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="You can only start a task with NEW state">
+        <button class="btn btn-success" [disabled]="true">Start</button>
+    </span>
+</div>
