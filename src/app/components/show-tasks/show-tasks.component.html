@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let task of tasks | orderBy: key : reverse | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+            <tr *ngFor="let task of tasks | orderBy: key : reverse | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
               <td id="name">{{task.name}}</td>
               <td id="description">{{task.description}}</td>
               <td id="currentState">{{task.currentState}}</td>

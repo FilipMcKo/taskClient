@@ -45,7 +45,7 @@ import { InfoPopupComponent } from './components/info-popup/info-popup.component
     SimpleModalModule
   ],
   providers: [TaskService],
-  entryComponents: [ConfirmComponent],
+  entryComponents: [ConfirmComponent, InfoPopupComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
