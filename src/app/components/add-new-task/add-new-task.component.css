@@ -1,0 +1,13 @@
+#name{
+    width: 300px;
+}
+#desc{
+    width: 550px;
+}
+
+#addNewButton{
+    width: 130px;
+    height: 30 px;
+    right: 50px;
+    top: 40px
+}

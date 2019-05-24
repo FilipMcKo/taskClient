@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <form name="testform">
+        <table class="table table-stripped">
+          <thead>
+            <tr>
+              <th (click)="sort('name')">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Current state</th>
+              <th scope="col">Progress percentage</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let task of tasks | orderBy: key : reverse | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+              <td id="name">{{task.name}}</td>
+              <td id="description">{{task.description}}</td>
+              <td id="currentState">{{task.currentState}}</td>
+              <td id="progressPercentage">{{task.progressPercentage}}</td>
+              <td><app-start-task [task]="task"></app-start-task></td>
+              <td><app-cancel-task [task]="task"></app-cancel-task></td>
+              <td><app-remove-task [task]="task"></app-remove-task></td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </form>
+      <hr>
+    </div>
+  </div>
+</div>
