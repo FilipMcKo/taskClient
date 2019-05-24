@@ -64,7 +64,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleSubOfTaskRemoval(data: number){
+  handleSubOfTaskRemoval(data: number) {
     let task: Task = this.tasks.find(x => x.id === data);
     if (task !== undefined) {
       this.tasks = this.tasks.filter(function (_task) {
@@ -89,4 +89,3 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
 }
 
 //TODO: obsługa błędów które dostaję od api powinny się odbywać w jakimś httpHandlerze, zeby nie duplikować kodu w każdym subscribe
-//TODO: jakies popupy informujące o wydarzeniu

@@ -1,40 +1,46 @@
-#newTask {
-    list-style: none;
-    width: 100%;
-    height: 50px;
-    margin: 0;
-    padding: 0;
-    white-space: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-#newTask>li {
-    display: inline-block;
-    width: 30%;
-    height: 100%;
-}
-
 thead>tr>th {
     cursor: pointer;
 }
 
 #name {
-    width: 20%;
+    width: 25%;
+    font-family: "Courier New";
+    vertical-align: middle;
+}
+
+#descriptionTitle {
+    width: 30%;
+    font-family: "Courier New";
+    vertical-align: middle;
 }
 
 #description {
     word-break: break-word;
-    width: 25%;
-    max-width: 450px;
+    width: 30%;
+    font-family: "Courier New";
+    vertical-align: middle;
 }
 
 #currentState {
     width: 12%;
     text-align: center;
+    vertical-align: center;
+    font-family: "Courier New";
+    vertical-align: middle;
 }
 
 #progressPercentage {
-    width: 18%;
+    width: 10%;
     text-align: center;
+    font-family: "Courier New";
+    vertical-align: middle;
+}
+
+#border {
+    outline: 2px dotted rgba(153, 164, 29, 0.48);
+    outline-offset: 1px;
+}
+
+#buttons {
+    vertical-align: middle;
 }
