@@ -15,6 +15,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
 
   private subscriptionOfTaskOperations: Subscription;
   private subscriptionOfTaskRemoval: Subscription;
+  private subscriptionOfErrors: Subscription;
   private tasks: Array<Task>;
   private reverse: boolean = false;
   private key: string = 'name';
@@ -28,7 +29,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getAllTasks();
 
-    this.subscriptionOfTaskOperations = this._myService.getCommonObservableOfTask().subscribe(
+    this.subscriptionOfTaskOperations = this._myService.getObservableOfTask().subscribe(
       data => {
         this.handleSubOfTaskOperations(data);
       }
@@ -37,6 +38,12 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     this.subscriptionOfTaskRemoval = this._myService.getObservableOfRemovedTask().subscribe(
       data => {
         this.handleSubOfTaskRemoval(data);
+      }
+    )
+
+    this.subscriptionOfErrors = this._myService.getObservableOfErrors().subscribe(
+      data => {
+        console.log(data.message);
       }
     )
   }
@@ -57,7 +64,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     this._myService.getAllTasks().subscribe(
       data => {
         this.tasks.forEach(function (task: Task) {
-            task.assignValuesOf(data.find(x => x.id === task.id))
+          task.assignValuesOf(data.find(x => x.id === task.id))
         })
       })
   }
@@ -75,12 +82,17 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
 
   handleSubOfTaskRemoval(data: number) {
     let task: Task = this.tasks.find(x => x.id === data);
-    this.tasks
     if (task !== undefined) {
       this.tasks = this.tasks.filter(function (_task) {
         return _task.id !== task.id;
       })
     }
+  }
+
+  handleErrorOfTaskOperations(error) {
+    let disposable = this.simpleModalService.addModal(InfoPopupComponent, {
+      message: 'Error occured: ' + error
+    }).subscribe();
   }
 
   taskAddedInfo(data: Task) {
@@ -97,5 +109,3 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     this.subscriptionOfTaskRemoval.unsubscribe();
   }
 }
-
-//TODO: obsługa błędów które dostaję od api powinny się odbywać w jakimś httpHandlerze, zeby nie duplikować kodu w każdym subscribe
