@@ -18,6 +18,7 @@ import {  MatButtonModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { InfoPopupComponent } from './components/info-popup/info-popup.component';
+import { RefreshProgressComponent } from './components/refresh-progress/refresh-progress.component';
 
 
 
@@ -30,7 +31,8 @@ import { InfoPopupComponent } from './components/info-popup/info-popup.component
     RemoveTaskComponent,
     ShowTasksComponent,
     ConfirmComponent,
-    InfoPopupComponent
+    InfoPopupComponent,
+    RefreshProgressComponent,
   ],
   imports: [
     BrowserModule,

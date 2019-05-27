@@ -1,0 +1,10 @@
+<div *ngIf="task.currentState === 'RUNNING'">
+  <span data-toggle="tooltip" title="Refresh {{task.name}}">
+    <button id="refresh" class="btn btn-white btn-xs" (click)="refreshTask(task)"><span id="span" class="glyphicon glyphicon-repeat"></span></button>
+  </span>
+</div>
+<div *ngIf="task.currentState !== 'RUNNING'">
+  <span data-toggle="tooltip" title="Refresh is possible when task is RUNNING.">
+    <button id="refresh" class="btn btn-white btn-xs" [disabled]="true"><span id="span" class="glyphicon glyphicon-repeat"></span></button>
+  </span>
+</div>

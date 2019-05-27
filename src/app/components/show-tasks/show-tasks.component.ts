@@ -53,6 +53,15 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
       })
   }
 
+  refreshAll() {
+    this._myService.getAllTasks().subscribe(
+      data => {
+        this.tasks.forEach(function (task: Task) {
+            task.assignValuesOf(data.find(x => x.id === task.id))
+        })
+      })
+  }
+
   handleSubOfTaskOperations(data: Task) {
     let task: Task = this.tasks.find(x => x.id === data.id);
     if (task !== undefined) {
@@ -66,6 +75,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
 
   handleSubOfTaskRemoval(data: number) {
     let task: Task = this.tasks.find(x => x.id === data);
+    this.tasks
     if (task !== undefined) {
       this.tasks = this.tasks.filter(function (_task) {
         return _task.id !== task.id;

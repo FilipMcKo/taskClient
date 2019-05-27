@@ -14,6 +14,7 @@ export class TaskService {
   private baseUrl: string = "http://localhost:8080";
   private subjectOfTask: Subject<Task> = new Subject();
   private subjectOfRemovedTask: Subject<number> = new Subject();
+  private subjectOfAllTasks: Subject<Task[]> = new Subject();
 
   constructor(private _http: HttpClient) { }
 
@@ -33,7 +34,14 @@ export class TaskService {
     );
   }
 
-  //TODO: przebudować temoveTask tak żeby można było go dołączyć do subjectOfTask i obserwować zmiany w jednym miejscu
+  getTaskById(taskId: number) {
+    this._http.get(this.baseUrl + '/tasks/' + taskId).subscribe(
+      data => {
+        this.subjectOfTask.next(new Task().deserialize(data));
+      }
+    );
+  }
+
   removeTask(taskId: number) {
     return this._http.delete(this.baseUrl + '/tasks/' + taskId).subscribe(
       data => {

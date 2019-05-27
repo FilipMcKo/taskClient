@@ -1,3 +1,5 @@
+tr:hover {background-color: #f1f3f3;}
+
 thead>tr>th {
     cursor: pointer;
 }
@@ -22,7 +24,7 @@ thead>tr>th {
 }
 
 #currentState {
-    width: 12%;
+    width: 13%;
     text-align: center;
     vertical-align: center;
     font-family: "Courier New";
@@ -36,11 +38,24 @@ thead>tr>th {
     vertical-align: middle;
 }
 
+#progressPercentageRows {
+    width: 10%;
+    text-align: right;
+    font-family: "Courier New";
+    vertical-align: middle;
+   
+}
+
 #border {
     outline: 2px dotted rgba(153, 164, 29, 0.48);
     outline-offset: 1px;
 }
 
 #buttons {
+    vertical-align: middle;
+}
+
+#refresh {
+    width: 10%;
     vertical-align: middle;
 }
