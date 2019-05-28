@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { TaskService } from '../../task.service';
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
@@ -43,7 +44,8 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
 
     this.subscriptionOfErrors = this._myService.getObservableOfErrors().subscribe(
       data => {
-        console.log(data.message);
+        console.log('This is printer from show-tasks component: ' + data.message);
+        this.errorOccuredInfo(data);
       }
     )
   }
@@ -107,5 +109,13 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptionOfTaskOperations.unsubscribe();
     this.subscriptionOfTaskRemoval.unsubscribe();
+  }
+
+
+
+  errorOccuredInfo(error: HttpErrorResponse) {
+    this.simpleModalService.addModal(InfoPopupComponent, {
+      message: 'Error occured: ' + JSON.stringify(error.error)
+    }).subscribe();
   }
 }

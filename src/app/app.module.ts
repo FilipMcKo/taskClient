@@ -2,7 +2,7 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TaskService } from './task.service'
 
 import { AppComponent } from './app.component';
@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { InfoPopupComponent } from './components/info-popup/info-popup.component';
 import { RefreshProgressComponent } from './components/refresh-progress/refresh-progress.component';
+import { InterceptorService } from './interceptor.service';
 
 
 
@@ -46,7 +47,12 @@ import { RefreshProgressComponent } from './components/refresh-progress/refresh-
     BrowserModule,
     SimpleModalModule
   ],
-  providers: [TaskService],
+  providers: [TaskService,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: InterceptorService,
+    multi: true
+  }],
   entryComponents: [ConfirmComponent, InfoPopupComponent],
   bootstrap: [AppComponent]
 })
