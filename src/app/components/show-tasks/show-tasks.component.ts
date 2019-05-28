@@ -1,16 +1,23 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HTTP_INTERCEPTORS, HttpInterceptor } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { TaskService } from '../../task.service';
-import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { Component, OnInit, Injectable, OnDestroy, ErrorHandler, Inject } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { SimpleModalService } from 'ngx-simple-modal';
 import { InfoPopupComponent } from '../info-popup/info-popup.component';
+import { InterceptorService } from 'src/app/interceptor.service';
+import { GlobalErrorService } from 'src/app/global-error.service';
 
 
 @Component({
   selector: 'app-show-tasks',
   templateUrl: './show-tasks.component.html',
-  styleUrls: ['./show-tasks.component.css']
+  styleUrls: ['./show-tasks.component.css'],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: InterceptorService,
+    multi: true
+  } ]
 })
 export class ShowTasksComponent implements OnInit, OnDestroy {
 
@@ -25,7 +32,11 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   // private page: number = 0;
   // private pages: Array<number>;
 
-  constructor(private _myService: TaskService, private simpleModalService: SimpleModalService) { }
+  constructor(private _myService: TaskService, private simpleModalService: SimpleModalService, @Inject(HTTP_INTERCEPTORS) private interceptorService: InterceptorService) { 
+    
+  }
+  //private interceptorService: InterceptorService,
+  //, private globalErrorService: GlobalErrorService
 
   ngOnInit() {
     this.getAllTasks();
@@ -42,9 +53,10 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
       }
     )
 
-    this.subscriptionOfErrors = this._myService.getObservableOfErrors().subscribe(
+    let X = this.interceptorService.getObservableOfErrors();
+    this.subscriptionOfErrors = X.subscribe(
       data => {
-        console.log('This is printer from show-tasks component: ' + data.message);
+        console.log('interceptorServeice.getObservableOfErrors().subscribe -> data');
         this.errorOccuredInfo(data);
       }
     )
@@ -91,11 +103,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleErrorOfTaskOperations(error) {
-    let disposable = this.simpleModalService.addModal(InfoPopupComponent, {
-      message: 'Error occured: ' + error
-    }).subscribe();
-  }
+  // te dwie metody mogłyby byc w osobnym komponencie - byłby miło
 
   taskAddedInfo(data: Task) {
     let disposable = this.simpleModalService.addModal(InfoPopupComponent, {
@@ -106,16 +114,16 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     }, 2000);
   }
 
-  ngOnDestroy() {
-    this.subscriptionOfTaskOperations.unsubscribe();
-    this.subscriptionOfTaskRemoval.unsubscribe();
-  }
-
-
-
-  errorOccuredInfo(error: HttpErrorResponse) {
+  errorOccuredInfo(error: any) {
+    console.log('insidde errorOccurredInfo')
     this.simpleModalService.addModal(InfoPopupComponent, {
       message: 'Error occured: ' + JSON.stringify(error.error)
     }).subscribe();
+  }
+
+  ngOnDestroy() {
+    this.subscriptionOfTaskOperations.unsubscribe();
+    this.subscriptionOfTaskRemoval.unsubscribe();
+    //this.subscriptionOfErrors.unsubscribe();
   }
 }

@@ -1,7 +1,8 @@
+import { GlobalErrorService } from './global-error.service';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TaskService } from './task.service'
 
@@ -14,7 +15,7 @@ import { StartTaskComponent } from './components/start-task/start-task.component
 import { CancelTaskComponent } from './components/cancel-task/cancel-task.component';
 import { RemoveTaskComponent } from './components/remove-task/remove-task.component';
 import { ShowTasksComponent } from './components/show-tasks/show-tasks.component';
-import {  MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { InfoPopupComponent } from './components/info-popup/info-popup.component';
@@ -48,11 +49,18 @@ import { InterceptorService } from './interceptor.service';
     SimpleModalModule
   ],
   providers: [TaskService,
-  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: InterceptorService,
-    multi: true
-  }],
+
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: InterceptorService,
+    //   multi: true
+    // }
+    // ,
+    // {
+    //   provide: ErrorHandler,
+    //   useClass: GlobalErrorService
+    // }
+  ],
   entryComponents: [ConfirmComponent, InfoPopupComponent],
   bootstrap: [AppComponent]
 })
