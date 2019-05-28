@@ -79,7 +79,8 @@ export class TaskService {
   }
 
   startProcessingTask(task: Task) {
-    this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).pipe(
+    this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null)
+    .pipe(
       catchError(err => {
         console.log('from inside of catchError in startProcessing', err.message);
         this.subjectOfErrors.next(err);
@@ -100,24 +101,26 @@ export class TaskService {
 
   cancelProcessingTask(task: Task) {
     console.log('before http.put')
-    this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).pipe(
-      catchError(
-        err => {
-          console.log('from inside of catchError in cancelProcessing', err.message);
-          this.subjectOfErrors.next(err);
-          return Observable.empty();
-        }
-      ))
+    this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null)
+      // .pipe(
+      //   catchError(
+      //     err => {
+      //       console.log('from inside of catchError in cancelProcessing', err.message);
+      //       this.subjectOfErrors.next(err);
+      //       return Observable.empty();
+      //     }
+      //   ))
       .subscribe(
         (data) => {
           this.subjectOfTask.next(new Task().deserialize(data));
-        },
-        (err) => {
-          console.log('error cougth in cancelProcessing.subscribe()');
-        },
-        () => {
-          console.log("cancel stream completed");
         }
+        // ,
+        // (err) => {
+        //   console.log('error cougth in cancelProcessing.subscribe()');
+        // },
+        // () => {
+        //   console.log("cancel stream completed");
+        // }
       );
   }
 
