@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TaskService } from './task.service'
+import { HttpService } from './http.service'
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -47,7 +47,7 @@ import { InterceptorService } from './interceptor.service';
     BrowserModule,
     SimpleModalModule
   ],
-  providers: [TaskService,
+  providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,

@@ -1,25 +1,15 @@
-import { HttpErrorResponse, HTTP_INTERCEPTORS, HttpInterceptor } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-import { TaskService } from '../../task.service';
-import { Component, OnInit, Injectable, OnDestroy, ErrorHandler, Inject } from '@angular/core';
+import { HttpService } from '../../http.service';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { SimpleModalService } from 'ngx-simple-modal';
 import { InfoPopupComponent } from '../info-popup/info-popup.component';
-import { InterceptorService } from 'src/app/interceptor.service';
-
-
-
-//export const HTTP_INTERCEPTORS = new InjectionToken<InterceptorService>('Http interceptor');
+import { ErrorHandlerService } from 'src/app/error-handler.service';
 
 @Component({
   selector: 'app-show-tasks',
   templateUrl: './show-tasks.component.html',
   styleUrls: ['./show-tasks.component.css'],
-  // providers: [{
-  //   provide: HTTP_INTERCEPTORS,
-  //   useClass: InterceptorService,
-  //   multi: true
-  // } ]
 })
 export class ShowTasksComponent implements OnInit, OnDestroy {
 
@@ -34,9 +24,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   // private page: number = 0;
   // private pages: Array<number>;
 
-  constructor(private _myService: TaskService, private simpleModalService: SimpleModalService) { 
-  }
-                                                                                            //@Inject powoduje, że dostaję błąd: getObservableOfErrors() is not a function
+  constructor(private _myService: HttpService, private simpleModalService: SimpleModalService, private errorHandlerService: ErrorHandlerService) { }                                                                                        
   ngOnInit() {
     this.getAllTasks();
 
@@ -51,14 +39,12 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
         this.handleSubOfTaskRemoval(data);
       }
     )
-      
-    // let X = this.interceptorService.getObservableOfErrors();
-    // this.subscriptionOfErrors = X.subscribe(
-    //   data => {
-    //     console.log('interceptorServeice.getObservableOfErrors().subscribe -> data');
-    //     this.errorOccuredInfo(data);
-    //   }
-    // )
+    
+    this.subscriptionOfErrors = this.errorHandlerService.getObservableOfErrors().subscribe(
+      data => {
+        this.errorOccuredInfo(data);
+      }
+    )
   }
 
   sort(key: string) {
@@ -102,6 +88,14 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngOnDestroy() {
+    this.subscriptionOfTaskOperations.unsubscribe();
+    this.subscriptionOfTaskRemoval.unsubscribe();
+    this.subscriptionOfErrors.unsubscribe();
+  }
+
+
+
   // te dwie metody mogłyby byc w osobnym komponencie - byłby miło
 
   taskAddedInfo(data: Task) {
@@ -118,11 +112,5 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     this.simpleModalService.addModal(InfoPopupComponent, {
       message: 'Error occured: ' + JSON.stringify(error.error)
     }).subscribe();
-  }
-
-  ngOnDestroy() {
-    this.subscriptionOfTaskOperations.unsubscribe();
-    this.subscriptionOfTaskRemoval.unsubscribe();
-    //this.subscriptionOfErrors.unsubscribe();
   }
 }

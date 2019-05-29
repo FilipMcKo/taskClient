@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TaskService } from './task.service';
+import { HttpService } from './http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Task } from './models/task.model';
 
 describe('TaskService', () => {
-  let service: TaskService;
+  let service: HttpService;
   let httpMock: HttpTestingController;
   const dummyTasks = [
     { id: 1, name: 'Task1', description: 'Description', currentState: 'NEW', progressPercentage: 0 },
@@ -16,11 +16,11 @@ describe('TaskService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [TaskService],
+      providers: [HttpService],
       imports: [HttpClientTestingModule]
     }).compileComponents();
 
-    service = TestBed.get(TaskService);
+    service = TestBed.get(HttpService);
     httpMock = TestBed.get(HttpTestingController);
   });
 

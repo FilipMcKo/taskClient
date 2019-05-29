@@ -5,15 +5,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs/Rx';
-import { of, throwError, Observable, observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable'
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskService {
+export class HttpService {
 
   private baseUrl: string = "http://localhost:8080";
   private subjectOfTask: Subject<Task> = new Subject();
