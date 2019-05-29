@@ -6,7 +6,6 @@ import { Task } from 'src/app/models/task.model';
 import { SimpleModalService } from 'ngx-simple-modal';
 import { InfoPopupComponent } from '../info-popup/info-popup.component';
 import { InterceptorService } from 'src/app/interceptor.service';
-import { GlobalErrorService } from 'src/app/global-error.service';
 
 
 @Component({
@@ -33,10 +32,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   // private pages: Array<number>;
 
   constructor(private _myService: TaskService, private simpleModalService: SimpleModalService, @Inject(HTTP_INTERCEPTORS) private interceptorService: InterceptorService) { 
-    
   }
-  //private interceptorService: InterceptorService,
-  //, private globalErrorService: GlobalErrorService
 
   ngOnInit() {
     this.getAllTasks();

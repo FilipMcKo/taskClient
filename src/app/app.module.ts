@@ -49,17 +49,11 @@ import { InterceptorService } from './interceptor.service';
     SimpleModalModule
   ],
   providers: [TaskService,
-
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: InterceptorService,
-    //   multi: true
-    // }
-    // ,
-    // {
-    //   provide: ErrorHandler,
-    //   useClass: GlobalErrorService
-    // }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
   ],
   entryComponents: [ConfirmComponent, InfoPopupComponent],
   bootstrap: [AppComponent]
