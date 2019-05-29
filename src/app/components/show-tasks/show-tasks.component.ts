@@ -8,15 +8,18 @@ import { InfoPopupComponent } from '../info-popup/info-popup.component';
 import { InterceptorService } from 'src/app/interceptor.service';
 
 
+
+//export const HTTP_INTERCEPTORS = new InjectionToken<InterceptorService>('Http interceptor');
+
 @Component({
   selector: 'app-show-tasks',
   templateUrl: './show-tasks.component.html',
   styleUrls: ['./show-tasks.component.css'],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: InterceptorService,
-    multi: true
-  } ]
+  // providers: [{
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: InterceptorService,
+  //   multi: true
+  // } ]
 })
 export class ShowTasksComponent implements OnInit, OnDestroy {
 
@@ -31,9 +34,9 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   // private page: number = 0;
   // private pages: Array<number>;
 
-  constructor(private _myService: TaskService, private simpleModalService: SimpleModalService, @Inject(HTTP_INTERCEPTORS) private interceptorService: InterceptorService) { 
+  constructor(private _myService: TaskService, private simpleModalService: SimpleModalService) { 
   }
-
+                                                                                            //@Inject powoduje, że dostaję błąd: getObservableOfErrors() is not a function
   ngOnInit() {
     this.getAllTasks();
 
@@ -48,14 +51,14 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
         this.handleSubOfTaskRemoval(data);
       }
     )
-
-    let X = this.interceptorService.getObservableOfErrors();
-    this.subscriptionOfErrors = X.subscribe(
-      data => {
-        console.log('interceptorServeice.getObservableOfErrors().subscribe -> data');
-        this.errorOccuredInfo(data);
-      }
-    )
+      
+    // let X = this.interceptorService.getObservableOfErrors();
+    // this.subscriptionOfErrors = X.subscribe(
+    //   data => {
+    //     console.log('interceptorServeice.getObservableOfErrors().subscribe -> data');
+    //     this.errorOccuredInfo(data);
+    //   }
+    // )
   }
 
   sort(key: string) {

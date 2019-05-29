@@ -1,4 +1,3 @@
-import { GlobalErrorService } from './global-error.service';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
