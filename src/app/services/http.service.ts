@@ -1,4 +1,4 @@
-import { TaskCreationRequest } from './models/taskCreationRequest.model';
+import { TaskCreationRequest } from '../models/taskCreationRequest.model';
 import { Injectable } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';

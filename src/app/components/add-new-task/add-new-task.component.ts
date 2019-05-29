@@ -1,6 +1,6 @@
 import { TaskCreationRequest } from '../../models/taskCreationRequest.model';
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../http.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-add-new-task',

@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { HttpService } from '../../http.service';
+import { HttpService } from '../../services/http.service';
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { SimpleModalService } from 'ngx-simple-modal';

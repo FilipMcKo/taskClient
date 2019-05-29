@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HttpService } from '../../http.service';
+import { HttpService } from '../../services/http.service';
 import { Task } from '../../models/task.model';
 import { SimpleModalService } from 'ngx-simple-modal';
 import { ConfirmComponent } from 'src/app/components/confirm/confirm.component';

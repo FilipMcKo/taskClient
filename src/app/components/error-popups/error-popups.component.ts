@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SimpleModalService } from 'ngx-simple-modal';
-import { ErrorHandlerService } from 'src/app/error-handler.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { InfoPopupComponent } from '../info-popup/info-popup.component';
 
 @Component({
@@ -11,20 +11,33 @@ import { InfoPopupComponent } from '../info-popup/info-popup.component';
 })
 export class ErrorPopupsComponent implements OnInit {
   private subscriptionOfErrors: Subscription;
+  private errorMessage: string = "No message";
 
-  constructor(private simpleModalService: SimpleModalService, private errorHandlerService: ErrorHandlerService) { }  
+  constructor(private simpleModalService: SimpleModalService, private errorHandlerService: ErrorHandlerService) { }
 
   ngOnInit() {
     this.subscriptionOfErrors = this.errorHandlerService.getObservableOfErrors().subscribe(
       data => {
-        this.errorOccuredInfo(data);
+        this.getErrorMessage(data);
       }
     )
   }
 
-  errorOccuredInfo(error: any) {
-    this.simpleModalService.addModal(InfoPopupComponent, {
-      message: 'Error occured: ' + JSON.stringify(error.error)
+  private getErrorMessage(error: any) {
+
+    if (error.error['errors']) {
+      this.errorMessage = error.error['errors'][0]['defaultMessage'] + '.';
+    }
+    else {
+      this.errorMessage = error.error['message'];
+    }
+
+    this.showErrorPopup();
+  }
+
+  private showErrorPopup() {
+      this.simpleModalService.addModal(InfoPopupComponent, {
+      message: 'Error occured: ' + this.errorMessage
     }).subscribe();
   }
 

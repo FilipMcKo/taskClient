@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpService } from './http.service'
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +18,7 @@ import { CommonModule } from '@angular/common';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { InfoPopupComponent } from './components/info-popup/info-popup.component';
 import { RefreshProgressComponent } from './components/refresh-progress/refresh-progress.component';
-import { InterceptorService } from './interceptor.service';
+import { InterceptorService } from './services/interceptor.service';
 import { ErrorPopupsComponent } from './components/error-popups/error-popups.component';
 import { TaskAddedPopupComponent } from './components/task-added-popup/task-added-popup.component';
 

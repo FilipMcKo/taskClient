@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SimpleModalService } from 'ngx-simple-modal';
 import { Task } from 'src/app/models/task.model';
 import { Subscription } from 'rxjs';
-import { HttpService } from 'src/app/http.service';
+import { HttpService } from 'src/app/services/http.service';
 import { InfoPopupComponent } from '../info-popup/info-popup.component';
 
 @Component({
