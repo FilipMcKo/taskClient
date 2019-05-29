@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SimpleModalComponent } from 'ngx-simple-modal';
 export interface ConfirmModel {
-  message:string;
+  message: string;
 }
 @Component({
   selector: 'app-confirm',

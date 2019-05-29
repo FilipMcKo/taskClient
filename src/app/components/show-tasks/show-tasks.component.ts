@@ -1,15 +1,13 @@
 import { Subscription } from 'rxjs';
-import { TaskService } from '../../task.service';
-import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { HttpService } from '../../services/http.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { SimpleModalService } from 'ngx-simple-modal';
-import { InfoPopupComponent } from '../info-popup/info-popup.component';
-
 
 @Component({
   selector: 'app-show-tasks',
   templateUrl: './show-tasks.component.html',
-  styleUrls: ['./show-tasks.component.css']
+  styleUrls: ['./show-tasks.component.css'],
 })
 export class ShowTasksComponent implements OnInit, OnDestroy {
 
@@ -23,12 +21,11 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   // private page: number = 0;
   // private pages: Array<number>;
 
-  constructor(private _myService: TaskService, private simpleModalService: SimpleModalService) { }
-
+  constructor(private _myService: HttpService, private simpleModalService: SimpleModalService) { }
   ngOnInit() {
     this.getAllTasks();
 
-    this.subscriptionOfTaskOperations = this._myService.getCommonObservableOfTask().subscribe(
+    this.subscriptionOfTaskOperations = this._myService.getObservableOfTask().subscribe(
       data => {
         this.handleSubOfTaskOperations(data);
       }
@@ -57,7 +54,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     this._myService.getAllTasks().subscribe(
       data => {
         this.tasks.forEach(function (task: Task) {
-            task.assignValuesOf(data.find(x => x.id === task.id))
+          task.assignValuesOf(data.find(x => x.id === task.id))
         })
       })
   }
@@ -69,13 +66,11 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     }
     else {
       this.tasks.push(data);
-      this.taskAddedInfo(data);
     }
   }
 
   handleSubOfTaskRemoval(data: number) {
     let task: Task = this.tasks.find(x => x.id === data);
-    this.tasks
     if (task !== undefined) {
       this.tasks = this.tasks.filter(function (_task) {
         return _task.id !== task.id;
@@ -83,19 +78,8 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     }
   }
 
-  taskAddedInfo(data: Task) {
-    let disposable = this.simpleModalService.addModal(InfoPopupComponent, {
-      message: 'Task has been created: ' + data.name
-    }).subscribe();
-    setTimeout(() => {
-      disposable.unsubscribe();
-    }, 2000);
-  }
-
   ngOnDestroy() {
     this.subscriptionOfTaskOperations.unsubscribe();
     this.subscriptionOfTaskRemoval.unsubscribe();
   }
 }
-
-//TODO: obsługa błędów które dostaję od api powinny się odbywać w jakimś httpHandlerze, zeby nie duplikować kodu w każdym subscribe

@@ -1,24 +1,24 @@
-import { TaskCreationRequest } from './models/taskCreationRequest.model';
+import { TaskCreationRequest } from '../models/taskCreationRequest.model';
 import { Injectable } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs/Rx';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class TaskService {
+export class HttpService {
 
   private baseUrl: string = "http://localhost:8080";
   private subjectOfTask: Subject<Task> = new Subject();
   private subjectOfRemovedTask: Subject<number> = new Subject();
-  private subjectOfAllTasks: Subject<Task[]> = new Subject();
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient) { }
 
-  getCommonObservableOfTask() {
+  getObservableOfTask() {
     return this.subjectOfTask.asObservable();
   }
 
@@ -59,19 +59,20 @@ export class TaskService {
   }
 
   startProcessingTask(task: Task) {
-    this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).subscribe(
-      data => {
-        this.subjectOfTask.next(new Task().deserialize(data));
-      }
-    );
+    this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null)
+      .subscribe(
+        data => {
+          this.subjectOfTask.next(new Task().deserialize(data));
+        }
+      );
   }
 
   cancelProcessingTask(task: Task) {
-    this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).subscribe(
-      data => {
-        this.subjectOfTask.next(new Task().deserialize(data));
-      }
-    );
+    this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null)
+      .subscribe(
+        data => {
+          this.subjectOfTask.next(new Task().deserialize(data));
+        }
+      );
   }
-
 }
