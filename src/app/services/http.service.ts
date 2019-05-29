@@ -26,6 +26,14 @@ export class HttpService {
     return this.subjectOfRemovedTask.asObservable();
   }
 
+  getPageOfTasks(page: number){
+    return this._http.get<Task[]>(this.baseUrl + "/tasksPage?page=" + page)
+    .map(
+      data => {
+        return data['content'].map((task: Task) => new Task().deserialize(task));
+      });
+  }
+
   getAllTasks() {
     return this._http.get<Task[]>(this.baseUrl + '/tasks').map(
       data => {
