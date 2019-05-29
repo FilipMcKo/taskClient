@@ -3,8 +3,6 @@ import { HttpService } from '../../http.service';
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { SimpleModalService } from 'ngx-simple-modal';
-import { InfoPopupComponent } from '../info-popup/info-popup.component';
-import { ErrorHandlerService } from 'src/app/error-handler.service';
 
 @Component({
   selector: 'app-show-tasks',
@@ -15,7 +13,6 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
 
   private subscriptionOfTaskOperations: Subscription;
   private subscriptionOfTaskRemoval: Subscription;
-  private subscriptionOfErrors: Subscription;
   private tasks: Array<Task>;
   private reverse: boolean = false;
   private key: string = 'name';
@@ -24,7 +21,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   // private page: number = 0;
   // private pages: Array<number>;
 
-  constructor(private _myService: HttpService, private simpleModalService: SimpleModalService, private errorHandlerService: ErrorHandlerService) { }                                                                                        
+  constructor(private _myService: HttpService, private simpleModalService: SimpleModalService) { }                                                                                        
   ngOnInit() {
     this.getAllTasks();
 
@@ -37,12 +34,6 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     this.subscriptionOfTaskRemoval = this._myService.getObservableOfRemovedTask().subscribe(
       data => {
         this.handleSubOfTaskRemoval(data);
-      }
-    )
-    
-    this.subscriptionOfErrors = this.errorHandlerService.getObservableOfErrors().subscribe(
-      data => {
-        this.errorOccuredInfo(data);
       }
     )
   }
@@ -75,7 +66,6 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     }
     else {
       this.tasks.push(data);
-      this.taskAddedInfo(data);
     }
   }
 
@@ -91,26 +81,5 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptionOfTaskOperations.unsubscribe();
     this.subscriptionOfTaskRemoval.unsubscribe();
-    this.subscriptionOfErrors.unsubscribe();
-  }
-
-
-
-  // te dwie metody mogłyby byc w osobnym komponencie - byłby miło
-
-  taskAddedInfo(data: Task) {
-    let disposable = this.simpleModalService.addModal(InfoPopupComponent, {
-      message: 'Task has been created: ' + data.name
-    }).subscribe();
-    setTimeout(() => {
-      disposable.unsubscribe();
-    }, 2000);
-  }
-
-  errorOccuredInfo(error: any) {
-    console.log('insidde errorOccurredInfo')
-    this.simpleModalService.addModal(InfoPopupComponent, {
-      message: 'Error occured: ' + JSON.stringify(error.error)
-    }).subscribe();
   }
 }
