@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpService } from './http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Task } from './models/task.model';
+import { Task } from '../models/task.model';
 
 describe('TaskService', () => {
   let service: HttpService;

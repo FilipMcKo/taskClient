@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { SimpleModalService } from 'ngx-simple-modal';
 import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 import { InfoPopupComponent } from '../info-popup/info-popup.component';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-error-popups',
@@ -13,7 +14,7 @@ export class ErrorPopupsComponent implements OnInit {
   private subscriptionOfErrors: Subscription;
   private errorMessage: string = "No message";
 
-  constructor(private simpleModalService: SimpleModalService, private errorHandlerService: ErrorHandlerService) { }
+  constructor(private simpleModalService: SimpleModalService, private errorHandlerService: ErrorHandlerService, private httpService: HttpService) { }
 
   ngOnInit() {
     this.subscriptionOfErrors = this.errorHandlerService.getObservableOfErrors().subscribe(
@@ -29,18 +30,16 @@ export class ErrorPopupsComponent implements OnInit {
       this.errorMessage = error.error['errors'][0]['defaultMessage'] + '.';
     }
     else {
-      this.errorMessage = error.error['message'];
+      this.errorMessage = error.error['message'] + " Task's state is outdated. Please click refresh." ;
     }
-
     this.showErrorPopup();
   }
 
   private showErrorPopup() {
-      this.simpleModalService.addModal(InfoPopupComponent, {
+    this.simpleModalService.addModal(InfoPopupComponent, {
       message: 'Error occured: ' + this.errorMessage
     }).subscribe();
   }
-
 
   ngOnDestroy() {
     this.subscriptionOfErrors.unsubscribe();

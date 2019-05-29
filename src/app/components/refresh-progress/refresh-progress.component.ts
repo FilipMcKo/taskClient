@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { HttpService } from 'src/app/services/http.service';
 

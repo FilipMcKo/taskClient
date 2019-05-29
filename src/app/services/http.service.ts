@@ -1,7 +1,7 @@
 import { TaskCreationRequest } from '../models/taskCreationRequest.model';
 import { Injectable } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs/Rx';

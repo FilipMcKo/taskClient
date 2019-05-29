@@ -23,7 +23,7 @@ export class TaskAddedPopupComponent implements OnInit {
   }
 
   handleSubOfTaskOperations(data: Task) {
-    if (data.currentState==="NEW"){
+    if (data.currentState === "NEW") {
       let disposable = this.simpleModalService.addModal(InfoPopupComponent, {
         message: 'Task has been created: ' + data.name
       }).subscribe();

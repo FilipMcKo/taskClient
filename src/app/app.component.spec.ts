@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2OrderModule } from 'ng2-order-pipe';
-import { HttpService } from './http.service';
+import { HttpService } from './services/http.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {

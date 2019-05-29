@@ -7,12 +7,12 @@ import { Subject } from 'rxjs';
 })
 export class ErrorHandlerService {
   private subjectOfErrors: Subject<HttpErrorResponse> = new Subject();
-  
+
   getObservableOfErrors() {
     return this.subjectOfErrors.asObservable();
   }
 
-  getSubjectOfErrors(){
+  getSubjectOfErrors() {
     return this.subjectOfErrors;
   }
 }
