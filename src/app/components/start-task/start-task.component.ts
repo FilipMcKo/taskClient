@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { TaskService } from '../../task.service';
+import { Component, Input } from '@angular/core';
+import { HttpService } from '../../services/http.service';
 import { Task } from '../../models/task.model';
 
 @Component({
@@ -12,11 +12,9 @@ export class StartTaskComponent {
   @Input()
   task: Task;
 
-  constructor(private _myService: TaskService) {}
+  constructor(private _myService: HttpService) { }
 
   startProcessingTask(task: Task) {
     this._myService.startProcessingTask(task);
   }
-
-  
 }

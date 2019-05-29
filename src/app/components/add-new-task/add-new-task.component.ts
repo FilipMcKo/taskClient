@@ -1,6 +1,6 @@
 import { TaskCreationRequest } from '../../models/taskCreationRequest.model';
-import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../../task.service';
+import { Component } from '@angular/core';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-add-new-task',
@@ -11,7 +11,7 @@ export class AddNewTaskComponent {
 
   private _taskCreationRequest: TaskCreationRequest = new TaskCreationRequest();
 
-  constructor(private _myService: TaskService) { }
+  constructor(private _myService: HttpService) { }
 
   addNewTask() {
     this._myService.addNewTask(this._taskCreationRequest);

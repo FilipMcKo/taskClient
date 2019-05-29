@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Task } from '../../models/task.model';
-import { TaskService } from '../../task.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-cancel-task',
@@ -12,7 +12,7 @@ export class CancelTaskComponent {
   @Input()
   task: Task;
 
-  constructor(private _myService: TaskService) { }
+  constructor(private _myService: HttpService) { }
 
   cancelProcessingTask(task: Task) {
     this._myService.cancelProcessingTask(task);

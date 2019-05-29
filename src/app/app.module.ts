@@ -2,8 +2,7 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { TaskService } from './task.service'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
@@ -14,10 +13,14 @@ import { StartTaskComponent } from './components/start-task/start-task.component
 import { CancelTaskComponent } from './components/cancel-task/cancel-task.component';
 import { RemoveTaskComponent } from './components/remove-task/remove-task.component';
 import { ShowTasksComponent } from './components/show-tasks/show-tasks.component';
-import {  MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { SimpleModalModule } from 'ngx-simple-modal';
 import { InfoPopupComponent } from './components/info-popup/info-popup.component';
+import { RefreshProgressComponent } from './components/refresh-progress/refresh-progress.component';
+import { InterceptorService } from './services/interceptor.service';
+import { ErrorPopupsComponent } from './components/error-popups/error-popups.component';
+import { TaskAddedPopupComponent } from './components/task-added-popup/task-added-popup.component';
 
 
 
@@ -30,7 +33,10 @@ import { InfoPopupComponent } from './components/info-popup/info-popup.component
     RemoveTaskComponent,
     ShowTasksComponent,
     ConfirmComponent,
-    InfoPopupComponent
+    InfoPopupComponent,
+    RefreshProgressComponent,
+    ErrorPopupsComponent,
+    TaskAddedPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +50,13 @@ import { InfoPopupComponent } from './components/info-popup/info-popup.component
     BrowserModule,
     SimpleModalModule
   ],
-  providers: [TaskService],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
+  ],
   entryComponents: [ConfirmComponent, InfoPopupComponent],
   bootstrap: [AppComponent]
 })

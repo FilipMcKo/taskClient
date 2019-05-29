@@ -15,7 +15,7 @@ export class InfoPopupComponent extends SimpleModalComponent<ConfirmModel, boole
 
   message: string;
   task: Task;
-  
+
   constructor() {
     super();
   }

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { TaskService } from '../../task.service';
+import { Component, Input } from '@angular/core';
+import { HttpService } from '../../services/http.service';
 import { Task } from '../../models/task.model';
 import { SimpleModalService } from 'ngx-simple-modal';
 import { ConfirmComponent } from 'src/app/components/confirm/confirm.component';
@@ -14,7 +14,7 @@ export class RemoveTaskComponent {
   @Input()
   task: Task;
 
-  constructor(private _myService: TaskService, private simpleModalService: SimpleModalService) { }
+  constructor(private _myService: HttpService, private simpleModalService: SimpleModalService) { }
 
   removeTask(task: Task) {
     this.simpleModalService.addModal(ConfirmComponent, {
