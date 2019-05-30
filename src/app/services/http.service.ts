@@ -26,21 +26,15 @@ export class HttpService {
     return this.subjectOfRemovedTask.asObservable();
   }
 
-  getPageOfTasks(page: number){
-    return this._http.get<Task[]>(this.baseUrl + "/tasksPage?page=" + page)
-    .map(
-      data => {
-        data['content'].map((task: Task) => new Task().deserialize(task));
-        return data;
-      });
-  }
+  getPageOfTasksSorted(page: number, key: string, desc: string) {
 
-  getAllTasks() {
-    return this._http.get<Task[]>(this.baseUrl + '/tasks').map(
-      data => {
-        return data.map((task: Task) => new Task().deserialize(task));
-      }
-    );
+    return this._http.get<Task[]>(this.baseUrl + "/tasksPageSorted?page=" + page + "&key=" + key + "&desc=" + desc)
+      .map(
+        data => {
+          console.log("url: " + this.baseUrl + "/tasksPageSorted?page=" + page + "&key=" + key + "&desc=" + desc);
+          data['content'].map((task: Task) => new Task().deserialize(task));
+          return data;
+        });
   }
 
   getTaskById(taskId: number) {
@@ -54,7 +48,8 @@ export class HttpService {
   removeTask(taskId: number) {
     return this._http.delete(this.baseUrl + '/tasks/' + taskId).subscribe(
       data => {
-        this.subjectOfRemovedTask.next(<number>data);
+        //this.subjectOfRemovedTask.next(<number>data);
+        this.subjectOfTask.next(new Task());
       }
     )
   }
@@ -84,4 +79,18 @@ export class HttpService {
         }
       );
   }
+
+
+  // getPageOfTasks(page: number) {
+  //   return this._http.get<Task[]>(this.baseUrl + "/tasksPage?page=" + page)
+  //     .map(
+  //       data => {
+  //         data['content'].map((task: Task) => new Task().deserialize(task));
+  //         return data;
+  //       });
+  //}
+
+
+
+
 }
