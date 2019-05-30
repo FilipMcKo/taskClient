@@ -2,7 +2,7 @@
         <button (click)="cancelProcessingTask(task)" class="btn btn-warning">Cancel</button>
     </div>
     <div *ngIf="task.currentState !== 'RUNNING'">
-        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="You can't cancel a task if it's not running.">
+        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="You can't cancel a task if it's not RUNNING.">
             <button class="btn btn-warning" [disabled]="true">Cancel</button>
         </span>
     </div>
