@@ -2,7 +2,6 @@ import { Subscription } from 'rxjs';
 import { HttpService } from '../../services/http.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
-import { SimpleModalService } from 'ngx-simple-modal';
 
 @Component({
   selector: 'app-show-tasks',
@@ -14,72 +13,59 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   private subscriptionOfTaskOperations: Subscription;
   private subscriptionOfTaskRemoval: Subscription;
   private tasks: Array<Task>;
-  private reverse: boolean = false;
-  private key: string = 'name';
-  private p: number = 1;
-  // properties to be used while implementing pagination in backend
-  // private page: number = 0;
-  // private pages: Array<number>;
+  private page: number = 0;
+  private pages: Array<number>;
+  private key: string = '';
+  private descending: boolean = false;
 
-  constructor(private _myService: HttpService, private simpleModalService: SimpleModalService) { }
+  constructor(private _myService: HttpService) { }
+
   ngOnInit() {
-    this.getAllTasks();
-
+    this.getPageOfTasks();
     this.subscriptionOfTaskOperations = this._myService.getObservableOfTask().subscribe(
       data => {
-        this.handleSubOfTaskOperations(data);
+        this.getPageOfTasks();
       }
     );
-
-    this.subscriptionOfTaskRemoval = this._myService.getObservableOfRemovedTask().subscribe(
-      data => {
-        this.handleSubOfTaskRemoval(data);
-      }
-    )
   }
 
   sort(key: string) {
+    if (this.key === key) {
+      this.descending = !this.descending;
+    }
+    if (this.key !== key) {
+      this.descending = false;
+    }
     this.key = key;
-    this.reverse = !this.reverse;
+    this.getPageOfTasks();
   }
 
-  getAllTasks() {
-    this._myService.getAllTasks().subscribe(
+  loadPage(page) {
+    if (page < 0 || page > this.pages.length - 1) {
+      return;
+    }
+    this.page = page;
+    this.getPageOfTasks();
+  }
+
+  getPageOfTasks() {
+    this._myService.getPageOfTasksSorted(this.page, this.key, this.toString(this.descending)).subscribe(
       data => {
-        this.tasks = data;
-      })
-  }
-
-  refreshAll() {
-    this._myService.getAllTasks().subscribe(
-      data => {
-        this.tasks.forEach(function (task: Task) {
-          task.assignValuesOf(data.find(x => x.id === task.id))
-        })
-      })
-  }
-
-  handleSubOfTaskOperations(data: Task) {
-    let task: Task = this.tasks.find(x => x.id === data.id);
-    if (task !== undefined) {
-      task.assignValuesOf(data);
-    }
-    else {
-      this.tasks.push(data);
-    }
-  }
-
-  handleSubOfTaskRemoval(data: number) {
-    let task: Task = this.tasks.find(x => x.id === data);
-    if (task !== undefined) {
-      this.tasks = this.tasks.filter(function (_task) {
-        return _task.id !== task.id;
-      })
-    }
+        this.tasks = data['content'];
+        this.pages = new Array(data['totalPages']);
+      }
+    )
   }
 
   ngOnDestroy() {
     this.subscriptionOfTaskOperations.unsubscribe();
     this.subscriptionOfTaskRemoval.unsubscribe();
+  }
+
+  toString(value: boolean): string {
+    if (value) {
+      return "true";
+    }
+    return "false";
   }
 }

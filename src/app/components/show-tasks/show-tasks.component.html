@@ -5,22 +5,66 @@
         <table class="table table-stripped">
           <thead>
             <tr>
-              <th id="name" (click)="sort('name')">Name</th>
-              <th id="descriptionTitle" scope="col">Description</th>
-              <th id="progressPercentage" scope="col">Progress</th>
-              <th id="refresh">
-                <span data-toggle="tooltip" title="Refresh all">
-                  <button class="btn btn-white btn-xs" (click)="refreshAll()"><span id="span" class="glyphicon glyphicon-refresh"></span></button>
+              <th id="name" (click)="sort('name')" >
+                Name 
+                <span *ngIf="this.key!=='name'" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort.png"> 
+                </span>
+                <span *ngIf="this.key==='name'&&this.descending===false" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort-up.png">  
+                </span>
+                <span *ngIf="this.key==='name'&&this.descending===true" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort-down.png">  
                 </span>
               </th>
-              <th id="currentState" scope="col">Current state</th>
+              <th id="descriptionTitle" (click)="sort('description')" scope="col">
+                Description
+                <span *ngIf="this.key!=='description'" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort.png"> 
+                </span>
+                <span *ngIf="this.key==='description'&&this.descending===false" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort-up.png">  
+                </span>
+                <span *ngIf="this.key==='description'&&this.descending===true" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort-down.png">  
+                </span>
+              </th>
+              <th id="progressPercentage" (click)="sort('progressPercentage')" scope="col">
+                Progress
+                <span *ngIf="this.key!=='progressPercentage'" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort.png"> 
+                </span>
+                <span *ngIf="this.key==='progressPercentage'&&this.descending===false" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort-up.png">  
+                </span>
+                <span *ngIf="this.key==='progressPercentage'&&this.descending===true" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort-down.png">  
+                </span>
+              </th>
+              <th id="refresh">
+                <span data-toggle="tooltip" title="Refresh all">
+                  <button class="btn btn-white btn-xs" (click)="getPageOfTasks()"><span id="span" class="glyphicon glyphicon-refresh"></span></button>
+                </span>
+              </th>
+              <th id="currentState" (click)="sort('currentState')" scope="col">
+                Current state
+                <span *ngIf="this.key!=='currentState'" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort.png"> 
+                </span>
+                <span *ngIf="this.key==='currentState'&&this.descending===false" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort-up.png">  
+                </span>
+                <span *ngIf="this.key==='currentState'&&this.descending===true" class="inline">
+                    <img src="https://img.icons8.com/color/18/000000/sort-down.png">  
+                </span>
+              </th>
               <th></th>
               <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let task of tasks | orderBy: key : reverse | paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+            <tr *ngFor="let task of tasks">
               <td id="name">{{task.name}}</td>
               <td id="description">{{task.description}}</td>
               <td id="progressPercentageRows">{{task.progressPercentage}} %</td>
@@ -32,7 +76,17 @@
             </tr>
           </tbody>
         </table>
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <ul class="nav nav-pills">
+          <li>
+            <a class="nav-link" href="#" (click)="loadPage(this.page-1)"><< Previous</a>
+          </li>
+          <li class="nav-item" *ngFor="let p of pages; let i=index">
+            <a class="nav-link" href="#" (click)="loadPage(i)" [ngClass]="{'active':i==page}">{{i+1}}</a>
+          </li>
+          <li>
+            <a class="nav-link" href="#" (click)="loadPage(this.page+1)"> Next >></a>
+          </li>
+        </ul>
       </form>
       <hr>
     </div>
