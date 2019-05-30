@@ -1,5 +1,5 @@
 # TaskClient
-![alt text](https://i.imgur.com/MaiShoe.png)
+![alt text](https://i.imgur.com/GETA5R3.png)
 This is front-end client created for taskManager REST API - avalible in other repository. 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 
