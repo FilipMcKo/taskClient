@@ -30,7 +30,7 @@ export class ErrorPopupsComponent implements OnInit {
       this.errorMessage = error.error['errors'][0]['defaultMessage'] + '.';
     }
     else {
-      this.errorMessage = error.error['message'] + " Task's state is outdated. Please click refresh." ;
+      this.errorMessage = error.error['message'] + " Please click refresh." ;
     }
     this.showErrorPopup();
   }

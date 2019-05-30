@@ -27,15 +27,9 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
         this.getPageOfTasks();
       }
     );
-
-    this.subscriptionOfTaskRemoval = this._myService.getObservableOfRemovedTask().subscribe(
-      data => {
-        this.getPageOfTasks();
-      }
-    )
   }
 
-  setSortDirection(key: string) {
+  sort(key: string) {
     if (this.key === key) {
       this.descending = !this.descending;
     }
@@ -46,7 +40,10 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     this.getPageOfTasks();
   }
 
-  setPage(page) {
+  loadPage(page) {
+    if (page < 0 || page > this.pages.length - 1) {
+      return;
+    }
     this.page = page;
     this.getPageOfTasks();
   }
@@ -58,8 +55,6 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
         this.pages = new Array(data['totalPages']);
       }
     )
-      console.log(this.descending);
-      console.log(this.key);
   }
 
   ngOnDestroy() {
@@ -67,8 +62,8 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
     this.subscriptionOfTaskRemoval.unsubscribe();
   }
 
-  toString(value: boolean): string{
-    if(value){
+  toString(value: boolean): string {
+    if (value) {
       return "true";
     }
     return "false";

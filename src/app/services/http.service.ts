@@ -13,84 +13,45 @@ export class HttpService {
 
   private baseUrl: string = "http://localhost:8080";
   private subjectOfTask: Subject<Task> = new Subject();
-  private subjectOfRemovedTask: Subject<number> = new Subject();
+  private mapper = (data) => this.subjectOfTask.next(new Task().deserialize(data));
 
-  constructor(
-    private _http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   getObservableOfTask() {
     return this.subjectOfTask.asObservable();
   }
 
-  getObservableOfRemovedTask() {
-    return this.subjectOfRemovedTask.asObservable();
-  }
-
   getPageOfTasksSorted(page: number, key: string, desc: string) {
-
-    return this._http.get<Task[]>(this.baseUrl + "/tasksPageSorted?page=" + page + "&key=" + key + "&desc=" + desc)
-      .map(
-        data => {
-          console.log("url: " + this.baseUrl + "/tasksPageSorted?page=" + page + "&key=" + key + "&desc=" + desc);
-          data['content'].map((task: Task) => new Task().deserialize(task));
-          return data;
-        });
+    return this._http.get<Task[]>(this.baseUrl + "/tasksPageSorted?page=" + page + "&key=" + key + "&desc=" + desc);
   }
 
   getTaskById(taskId: number) {
     this._http.get(this.baseUrl + '/tasks/' + taskId).subscribe(
-      data => {
-        this.subjectOfTask.next(new Task().deserialize(data));
-      }
+      this.mapper
     );
   }
 
   removeTask(taskId: number) {
     return this._http.delete(this.baseUrl + '/tasks/' + taskId).subscribe(
-      data => {
-        //this.subjectOfRemovedTask.next(<number>data);
-        this.subjectOfTask.next(new Task());
-      }
+      this.mapper
     )
   }
 
   addNewTask(taskCreationRequest: TaskCreationRequest) {
     this._http.post(this.baseUrl + '/tasks', taskCreationRequest).subscribe(
-      data => {
-        this.subjectOfTask.next(new Task().deserialize(data));
-      }
+      this.mapper
     );
   }
 
   startProcessingTask(task: Task) {
-    this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null)
-      .subscribe(
-        data => {
-          this.subjectOfTask.next(new Task().deserialize(data));
-        }
+    this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).subscribe(
+        this.mapper
       );
   }
 
   cancelProcessingTask(task: Task) {
-    this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null)
-      .subscribe(
-        data => {
-          this.subjectOfTask.next(new Task().deserialize(data));
-        }
+    this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).subscribe(
+        this.mapper
       );
   }
-
-
-  // getPageOfTasks(page: number) {
-  //   return this._http.get<Task[]>(this.baseUrl + "/tasksPage?page=" + page)
-  //     .map(
-  //       data => {
-  //         data['content'].map((task: Task) => new Task().deserialize(task));
-  //         return data;
-  //       });
-  //}
-
-
-
-
 }
