@@ -30,7 +30,8 @@ export class HttpService {
     return this._http.get<Task[]>(this.baseUrl + "/tasksPage?page=" + page)
     .map(
       data => {
-        return data['content'].map((task: Task) => new Task().deserialize(task));
+        data['content'].map((task: Task) => new Task().deserialize(task));
+        return data;
       });
   }
 

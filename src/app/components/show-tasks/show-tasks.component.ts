@@ -60,7 +60,11 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
   getPageOfTasks(){
     this._myService.getPageOfTasks(this.page).subscribe(
       data => {
-        this.tasks = data;
+        console.log(data);
+        this.tasks = data['content'];
+        console.log(this.tasks);
+        this.pages = new Array(data['totalPages']);
+        console.log(this.pages);
       }
     )
   }
