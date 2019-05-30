@@ -22,7 +22,7 @@ export class HttpService {
   }
 
   getPageOfTasksSorted(page: number, key: string, desc: string) {
-    return this._http.get<Task[]>(this.baseUrl + "/tasksPageSorted?page=" + page + "&key=" + key + "&desc=" + desc);
+    return this._http.get<Task[]>(this.baseUrl + "/tasksPageSorted?pageNr=" + page + "&key=" + key + "&desc=" + desc);
   }
 
   getTaskById(taskId: number) {

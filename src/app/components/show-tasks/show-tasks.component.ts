@@ -2,6 +2,7 @@ import { Subscription } from 'rxjs';
 import { HttpService } from '../../services/http.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
+import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'app-show-tasks',
@@ -45,6 +46,7 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
       return;
     }
     this.page = page;
+    console.log('page: ' + page);
     this.getPageOfTasks();
   }
 
