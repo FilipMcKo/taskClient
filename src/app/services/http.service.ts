@@ -5,13 +5,15 @@ import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Subject } from 'rxjs/Rx';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  private baseUrl: string = "http://localhost:8080";
+  private baseUrl: string = environment.serverUrl;
   private subjectOfTask: Subject<Task> = new Subject();
   private mapper = (data) => this.subjectOfTask.next(new Task().deserialize(data));
 

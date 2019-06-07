@@ -1,13 +1,14 @@
-#name{
+#name {
     width: 30%;
     font-family: "Courier New";
 }
-#desc{
+
+#desc {
     width: 100%;
     font-family: "Courier New";
 }
 
-#addNewButton{
+#addNewButton {
     width: 100%;
     height: 30 px;
     right: 50px;

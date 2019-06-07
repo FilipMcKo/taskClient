@@ -1,7 +1,7 @@
 export class TaskCreationRequest {
 
-    private name: string;
-    private description: string;
+    name: string;
+    description: string;
 
     resetValues() {
         this.name = null;

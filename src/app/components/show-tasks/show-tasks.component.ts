@@ -2,7 +2,6 @@ import { Subscription } from 'rxjs';
 import { HttpService } from '../../services/http.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
-import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'app-show-tasks',
@@ -13,11 +12,11 @@ export class ShowTasksComponent implements OnInit, OnDestroy {
 
   private subscriptionOfTaskOperations: Subscription;
   private subscriptionOfTaskRemoval: Subscription;
-  private tasks: Array<Task>;
-  private page: number = 0;
-  private pages: Array<number>;
-  private key: string = '';
-  private descending: boolean = false;
+  tasks: Array<Task>;
+  page: number = 0;
+  pages: Array<number>;
+  key: string = '';
+  descending: boolean = false;
 
   constructor(private _myService: HttpService) { }
 

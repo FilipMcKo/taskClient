@@ -41,33 +41,4 @@ describe('TaskComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should change "reverse" and "key" variables', () => {
-    expect(component.reverse).toBe(false);
-    expect(component.key).toBe('name');
-    component.sort('description');
-    expect(component.reverse).toBe(true);
-    expect(component.key).toBe('description');
-  });
-
-  it('should add Task, return it and add to tasks array', () => {
-
-  });
-
-  it('should add task and then remove it', () => {
-
-  });
-
-  it('should start processing task', () => {
-    component.startProcessingTask(dummyTask);
-    expect(dummyTask.currentState).toEqual("RUNNING");
-  });
-
-  it('should cancel processing task', () => {
-    component.cancelProcessingTask(dummyTask);
-    expect(dummyTask.currentState).toEqual("NEW");
-    component.startProcessingTask(dummyTask);
-    component.cancelProcessingTask(dummyTask);
-    expect(dummyTask.currentState).toEqual("CANCELLED");
-    expect(dummyTask.progressPercentage).toEqual(0);
-  });
 });

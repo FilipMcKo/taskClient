@@ -22,8 +22,6 @@ import { InterceptorService } from './services/interceptor.service';
 import { ErrorPopupsComponent } from './components/error-popups/error-popups.component';
 import { TaskAddedPopupComponent } from './components/task-added-popup/task-added-popup.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

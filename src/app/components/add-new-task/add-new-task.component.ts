@@ -9,7 +9,7 @@ import { HttpService } from '../../services/http.service';
 })
 export class AddNewTaskComponent {
 
-  private _taskCreationRequest: TaskCreationRequest = new TaskCreationRequest();
+  _taskCreationRequest: TaskCreationRequest = new TaskCreationRequest();
 
   constructor(private _myService: HttpService) { }
 
