@@ -4,6 +4,7 @@
       <table class="table table-stripped" >
         <td id="name"><input type="text" class="form-control" placeholder="Name" [(ngModel)] = "_taskCreationRequest.name" ></td>
         <td id="desc"><input type="text" class="form-control"  placeholder="Desription" [(ngModel)] = "_taskCreationRequest.description" ></td>
+        <td id="dur"><input type="number" class="form-control" placeholder="Secs" [(ngModel)] = "_taskCreationRequest.customDuration"></td>
         <td id="addNewButton"><button (click)="addNewTask()" class="btn btn-success">Add new task</button></td>
       </table>
     </div>

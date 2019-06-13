@@ -14,6 +14,7 @@ export class AddNewTaskComponent {
   constructor(private _myService: HttpService) { }
 
   addNewTask() {
+    this._taskCreationRequest.customDuration *= 1000;
     this._myService.addNewTask(this._taskCreationRequest);
     this._taskCreationRequest.resetValues();
   }
