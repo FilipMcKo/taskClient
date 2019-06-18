@@ -12,12 +12,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class HttpService {
-
   private baseUrl: string = environment.serverUrl;
   private subjectOfTask: Subject<Task> = new Subject();
   private mapper = (data) => this.subjectOfTask.next(new Task().deserialize(data));
 
   constructor(private _http: HttpClient) { }
+
+  showStatistics() {
+    return this._http.get("localhost:8080/actuator/prometheus");
+  }
 
   getObservableOfTask() {
     return this.subjectOfTask.asObservable();
@@ -47,13 +50,13 @@ export class HttpService {
 
   startProcessingTask(task: Task) {
     this._http.put(this.baseUrl + '/tasks/' + task.id + '/start', null).subscribe(
-        this.mapper
-      );
+      this.mapper
+    );
   }
 
   cancelProcessingTask(task: Task) {
     this._http.put(this.baseUrl + '/tasks/' + task.id + '/cancel', null).subscribe(
-        this.mapper
-      );
+      this.mapper
+    );
   }
 }

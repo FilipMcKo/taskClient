@@ -21,6 +21,7 @@ import { RefreshProgressComponent } from './components/refresh-progress/refresh-
 import { InterceptorService } from './services/interceptor.service';
 import { ErrorPopupsComponent } from './components/error-popups/error-popups.component';
 import { TaskAddedPopupComponent } from './components/task-added-popup/task-added-popup.component';
+import { StatsComponent } from './components/stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TaskAddedPopupComponent } from './components/task-added-popup/task-adde
     RefreshProgressComponent,
     ErrorPopupsComponent,
     TaskAddedPopupComponent,
+    StatsComponent,
   ],
   imports: [
     BrowserModule,
